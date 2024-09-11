@@ -1,0 +1,13 @@
+@media print {
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    
+    .bill-container {
+      width: 100% !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+  
+  }
