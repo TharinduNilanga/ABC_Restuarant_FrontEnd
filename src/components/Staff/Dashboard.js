@@ -14,7 +14,7 @@ export default function Dashboard() {
         }
     }, []);
 
-    
+
     const imgStyle = {
         mt: '20px',
         borderRadius: '10px',
@@ -33,10 +33,10 @@ export default function Dashboard() {
                 }}
             >
                 <Box>
-                <Typography variant="h3">
-                        Welcome
+                    <Typography variant="h3">
+
                     </Typography>
-                    <img src="/assets/dashboard.jpeg" alt="restaurant"
+                    <img src="/assets/Home.png" alt="restaurant"
                         style={imgStyle}
                     />
                 </Box>

@@ -4,6 +4,7 @@ import { Button, TextField, Link, Grid, Box, Typography, CircularProgress, Stack
 import Container from '@mui/material/Container';
 import Footer from '../Footer/Footer';
 import Axios from 'axios';
+import { message } from 'antd';
 
 export default function LogIn() {
     const navigate = useNavigate();
@@ -35,12 +36,14 @@ export default function LogIn() {
                 }
             });
             if (result.data) {
+                message.success("Login Successfull..!")
                 setUserData(result.data);
             } else {
                 setAlert({ show: true, type: "error", message: "This email does not exist." });
             }
         } catch (error) {
             console.error("Error: ", error);
+            message.error("Login Successfull..!")
             setError("Failed to retrieve user details. Please try again.");
         } finally {
             setLoading(false);

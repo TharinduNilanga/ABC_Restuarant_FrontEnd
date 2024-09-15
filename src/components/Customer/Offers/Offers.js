@@ -18,7 +18,7 @@ export default function Offers() {
             navigate('/login');
         }
     }, [navigate]);
-    
+
     const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -53,7 +53,8 @@ export default function Offers() {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100vh',
+                height: '100%',
+                bgcolor: 'white'
             }}
         >
             <AppBar sx={{ display: 'fixed' }} />
@@ -117,7 +118,7 @@ export default function Offers() {
                     </Typography>
                 )}
             </Box>
-            <BottomNav />
+
         </Box>
     );
 }

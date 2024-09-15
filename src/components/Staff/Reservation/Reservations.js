@@ -20,7 +20,8 @@ export default function Reservations() {
     return (
         <Grid2
             sx={{
-                minWidth: '800px'
+                bgcolor: 'white', overflow: 'hidden',
+                height: '100vh'
             }}
         >
             <Menu />
@@ -28,7 +29,7 @@ export default function Reservations() {
                 component="main"
                 sx={{
                     padding: '30px 20px',
-                    marginLeft: '240px'
+                    marginLeft: '240px', bgcolor: 'white',
                 }}
             >
                 <Tabs />

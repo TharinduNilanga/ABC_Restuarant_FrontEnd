@@ -1,19 +1,20 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
+import { message } from "antd";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function CardComponent(props) {
-    
-// #######################################################################
+
+    // #######################################################################
     let userId = "";
-// #######################################################################
+    // #######################################################################
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(()=>{
-        userId=sessionStorage.getItem('userId')
-    },[])
+    useEffect(() => {
+        userId = sessionStorage.getItem('userId')
+    }, [])
 
     const handleClick = async (productId) => {
         console.log('====================================');
@@ -27,26 +28,28 @@ export default function CardComponent(props) {
                     productId: productId,
                 },
             });
+            message.success("product added to cart successfully")
             console.log('====================================');
             console.log(response);
             console.log('====================================');
 
         } catch (error) {
+            message.success("product adding failed")
             console.error(error);
             setError(error);
         } finally {
             setLoading(false);
         }
     };
-    
+
     const cardStyle = {
         display: 'flex',
         flexDirection: 'column',
         flex: ' 0 0 auto',
         scrolllBehavior: 'auto',
         margin: '10px',
-        width: '210px',
-        
+        width: '20%',
+        bgcolor: '#00796b',
         padding: '10px',
         borderRadius: '10px',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -68,12 +71,12 @@ export default function CardComponent(props) {
 
     const btnStyle = {
         mt: 0,
-        border: '2px solid #fe9e0d',
-        bgcolor: '#ffffff',
-        color: '#fe9e0d',
+        border: '2px solid  white',
+        bgcolor: '#00796b',
+        color: '#ffffff',
         ':hover': {
-            bgcolor: '#fe9e0d',
-            color: '#ffffff',
+            bgcolor: '#ffffff',
+            color: '#00796b',
         }
     }
 
@@ -94,7 +97,7 @@ export default function CardComponent(props) {
                 {props.product.productImage ?
                     (
                         <img
-                            src={`/${props.product.productImage}`}
+                            src={`data:image/jpeg;base64,${props.product.productImage}`}
                             alt=""
                             style={imgStyle}
                         />
@@ -117,13 +120,15 @@ export default function CardComponent(props) {
                         fontWeight: 'bold',
                         fontSize: '18px',
                         mt: 0,
+                        color: '#ffffff',
                     }}
                 >
                     {props.product.productName}
                 </Typography>
                 <Typography
                     sx={{
-                        fontSize: '12px'
+                        fontSize: '12px',
+                        color: '#ffffff',
                     }}
                 >
                     {props.product.productDescription}
@@ -132,8 +137,9 @@ export default function CardComponent(props) {
                     sx={{
                         fontSize: '16px',
                         mt: 1,
-                        textAlign: 'center',
+
                         fontWeight: 'bold',
+                        color: '#ffffff',
                     }}
                 >
                     Rs. {props.product.productPrice}

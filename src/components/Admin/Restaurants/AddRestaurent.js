@@ -11,6 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function AddUser() {
     const navigate = useNavigate();
@@ -71,9 +72,11 @@ export default function AddUser() {
         event.preventDefault();
         try {
             const response = await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/restaurent/addRestaurent`, form);
+            message.success("Restuarant Added Succesfully")
             navigate("/admin/restaurants");
         } catch (error) {
             console.error(error);
+            message.error("Restuarant Adding Failed")
         }
     };
 
@@ -133,6 +136,8 @@ export default function AddUser() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                bgcolor: 'white',
+                height: '100vh'
             }}
         >
             <Menu />
@@ -164,7 +169,7 @@ export default function AddUser() {
                     </Box>
                 ) : (
                     <Box
-                    
+
                     >
                         <Button
                             variant="contained"
@@ -186,8 +191,8 @@ export default function AddUser() {
                             component="main"
                             maxWidth="xs"
                             sx={{
-                               border:'2px solid black'
-                                 
+                                border: '2px solid black'
+
                             }}
                         >
                             <Typography

@@ -62,10 +62,10 @@ export default function Profile() {
         width: '250px',
         margin: '50px',
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: ' #cb7a01',
-            color: 'white',
+            bgcolor: ' white',
+            color: '#00796b',
         },
     };
 
@@ -73,6 +73,7 @@ export default function Profile() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                bgcolor: 'white'
             }}
         >
             <Menu />
@@ -113,147 +114,149 @@ export default function Profile() {
                         {error}
                     </Typography>
                 ) : (
-                <Box
-                    sx={{ marginTop: 'auto' }}
-                >
-                    <Container
-                        component="main"
-                        maxWidth="md"
+                    <Box
+                        sx={{ marginTop: 'auto' }}
                     >
-                        <Typography
-                            component="h1"
-                            variant="h4"
-                            sx={{
-                                textAlign: 'center',
-                                mt: '130px',
-                                mb: '30px',
-                                fontWeight: 'bold',
-                                textDecoration: 'underline',
-                            }}
+                        <Container
+                            component="main"
+                            maxWidth="md"
+                            sx={{ mt: 4, mb: 3, border: '2px solid black', }}
                         >
-                            Profile Details
-                        </Typography>
-                        <Box
-                            sx={{
-                                mt: 1,
-                            }}
-                        >
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td width={'45%'} align="right">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                First Name
-                                            </Typography>
-                                        </td>
-                                        <td width={'10%'} align="center">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                :
-                                            </Typography>
-                                        </td>
-                                        <td width={'45%'} align="left">
-                                            <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
-                                                {form.firstName}
-                                            </Typography>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                Last Name
-                                            </Typography>
-                                        </td>
-                                        <td align="center">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                :
-                                            </Typography>
-                                        </td>
-                                        <td align="left">
-                                            <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
-                                                {form.lastName}
-                                            </Typography>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                Address
-                                            </Typography>
-                                        </td>
-                                        <td align="center">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                :
-                                            </Typography>
-                                        </td>
-                                        <td align="left">
-                                            <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
-                                                {form.address}
-                                            </Typography>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                Email
-                                            </Typography>
-                                        </td>
-                                        <td align="center">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                :
-                                            </Typography>
-                                        </td>
-                                        <td align="left">
-                                            <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
-                                                {form.email}
-                                            </Typography>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                Role
-                                            </Typography>
-                                        </td>
-                                        <td align="center">
-                                            <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
-                                                :
-                                            </Typography>
-                                        </td>
-                                        <td align="left">
-                                            <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
-                                                {role.roleName}
-                                            </Typography>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <Typography></Typography>
-                            <Box
-                                display={'flex'}
-                                sx={{ mt: '20px', justifyContent: 'center' }}
+                            <Typography
+                                component="h1"
+                                variant="h4"
+                                sx={{
+                                    textAlign: 'center',
+                                    mt: '130px',
+                                    mb: '30px',
+                                    fontWeight: 'bold',
+                                    textDecoration: 'underline',
+                                    color: '#00796b',
+                                }}
                             >
-                                <Button
-                                    ml='0px'
-                                    type="submit"
-                                    variant="contained"
-                                    sx={buttonStyle}
-                                    onClick={() => navigate('/admin/editProfile')}
+                                Profile Details
+                            </Typography>
+                            <Box
+                                sx={{
+                                    mt: 1,
+                                }}
+                            >
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td width={'45%'} align="right">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    First Name
+                                                </Typography>
+                                            </td>
+                                            <td width={'10%'} align="center">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    :
+                                                </Typography>
+                                            </td>
+                                            <td width={'45%'} align="left">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    {form.firstName}
+                                                </Typography>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    Last Name
+                                                </Typography>
+                                            </td>
+                                            <td align="center">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    :
+                                                </Typography>
+                                            </td>
+                                            <td align="left">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    {form.lastName}
+                                                </Typography>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    Address
+                                                </Typography>
+                                            </td>
+                                            <td align="center">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    :
+                                                </Typography>
+                                            </td>
+                                            <td align="left">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    {form.address}
+                                                </Typography>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    Email
+                                                </Typography>
+                                            </td>
+                                            <td align="center">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    :
+                                                </Typography>
+                                            </td>
+                                            <td align="left">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    {form.email}
+                                                </Typography>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    Role
+                                                </Typography>
+                                            </td>
+                                            <td align="center">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    :
+                                                </Typography>
+                                            </td>
+                                            <td align="left">
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
+                                                    {role.roleName}
+                                                </Typography>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <Typography></Typography>
+                                <Box
+                                    display={'flex'}
+                                    sx={{ mt: '20px', justifyContent: 'center' }}
                                 >
-                                    Edit Details
-                                </Button>
-                                <Button
-                                    ml='auto'
-                                    type="submit"
-                                    variant="contained"
-                                    sx={buttonStyle}
-                                    onClick={() => navigate('/admin/changePassword')}
-                                >
-                                    Change Password
-                                </Button>
+                                    <Button
+                                        ml='0px'
+                                        type="submit"
+                                        variant="contained"
+                                        sx={buttonStyle}
+                                        onClick={() => navigate('/admin/editProfile')}
+                                    >
+                                        Edit Details
+                                    </Button>
+                                    <Button
+                                        ml='auto'
+                                        type="submit"
+                                        variant="contained"
+                                        sx={buttonStyle}
+                                        onClick={() => navigate('/admin/changePassword')}
+                                    >
+                                        Change Password
+                                    </Button>
+                                </Box>
                             </Box>
-                        </Box>
-                    </Container>
-                </Box>
+                        </Container>
+                    </Box>
                 )}
             </Box>
         </Grid2>

@@ -44,7 +44,7 @@ export default function Offers() {
     const availableOffers = offers.filter(offer => offer.offerStatus === "Available");
 
     return (
-        <Box>
+        <Box sx={{ bgcolor: 'white', overflow: 'hidden' }}>
             <Menu />
             <Box component="main" sx={{ padding: '30px 0px 30px 40px', marginLeft: '240px', height: '92vh', marginBottom: '20px' }}>
                 {loading ? (
@@ -78,7 +78,7 @@ export default function Offers() {
                     </Typography>
                 ) : availableOffers.length > 0 ? (
                     <Box sx={{ mb: '30px' }}>
-                        <Typography variant="h5" sx={{ mb: 1, fontWeight: 'bold' }}>Offers</Typography>
+
                         <Box sx={{ display: 'grid' }}>
                             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                                 {availableOffers.map((offer) => (

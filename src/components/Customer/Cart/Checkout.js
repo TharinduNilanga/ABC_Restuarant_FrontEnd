@@ -3,7 +3,7 @@ import AppBar from "../AppBar";
 import BottomNav from "../BottomNav";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { Box, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, InputLabel, Select, MenuItem, FormControl, Container } from "@mui/material";
+import { Box, Typography, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Button, TextField, InputLabel, Select, MenuItem, FormControl, Container, Grid } from "@mui/material";
 import { DatePicker, LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -15,13 +15,13 @@ export default function Checkout() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        const userId = sessionStorage.getItem('userId');
+        userId = sessionStorage.getItem('userId');
         const userRole = sessionStorage.getItem('userRole');
         if (!userId || userRole !== '3') {
             navigate('/login');
         }
     }, [navigate]);
-    
+
     const [userDetails, setUserDetails] = useState({});
     const [cartItems, setCartItems] = useState([]);
     const [productDetailsMap, setProductDetailsMap] = useState({});
@@ -89,7 +89,7 @@ export default function Checkout() {
 
     const loadRestaurants = async () => {
         try {
-            const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/restaurent/allRestaurents`);
+            const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/restaurent/allRestaurents/`);
             setRestaurants(result.data);
         } catch (err) {
             console.error("Error loading restaurants:", err);
@@ -114,7 +114,7 @@ export default function Checkout() {
 
     const handleClick = async (event) => {
         event.preventDefault();
-    
+        userId = sessionStorage.getItem('userId');
         const updatedOrderDetails = {
             customerId: userId,
             reservationProducts: cartItems.flatMap(item =>
@@ -129,7 +129,7 @@ export default function Checkout() {
             reservationTotal: total,
             reservationStatus: orderDetails.reservationStatus || ""
         };
-    
+
         try {
             await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/reservation/addReservation`, updatedOrderDetails);
             await deleteFromCartCollection();
@@ -152,7 +152,7 @@ export default function Checkout() {
             setError("Failed to delete items from cart.");
         }
     };
-    
+
     const handleMethodChange = (e) => {
         setSelectedMethod(e.target.value);
     };
@@ -189,19 +189,20 @@ export default function Checkout() {
         mt: '30px',
         mb: '30px',
         padding: '5px 80px',
-        backgroundColor: '#cb7a01',
+        backgroundColor: '#00796b',
         color: '#ffffff',
         borderRadius: '5px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid #00796b',
         alignContent: 'center',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
     const textboxStyle = {
         input: {
-            color: 'white',
+            color: 'black',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -214,7 +215,7 @@ export default function Checkout() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
             borderColor: "#fe9e0d",
         },
@@ -222,52 +223,51 @@ export default function Checkout() {
 
     const selectStyle = {
         mt: '5px',
-        color: 'white',
+        color: 'black',
         '& .Mui-selected': {
-            color: 'white',
+            color: 'black',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             "&.Mui-focused": {
                 "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#fe9e0d",
+                    borderColor: "#00796b",
                     borderWidth: "3px",
                 },
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
     };
 
     const datePicker = {
-        mt: '1.5',
-        mb: 1,
+
         '& .MuiInputBase-input': {
-            color: 'white',
+            color: 'black',
         },
         '& .MuiOutlinedInput-notchedOutline': {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
         '& .MuiInputLabel-root': {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
         },
         '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             borderWidth: "3px",
         },
         '& .MuiSvgIcon-root': {
-            color: 'white',
+            color: 'black',
         },
     };
 
     return (
-        <Box>
+        <Box sx={{ bgcolor: 'white',height:'100vh' }}>
             <AppBar />
             <Typography
                 variant="h4"
@@ -276,24 +276,25 @@ export default function Checkout() {
                     mt: '20px',
                     mb: '20px',
                     textDecoration: 'underline',
+                    color: '#00796b',
                 }}
             >
                 Order Details
             </Typography>
             <Box sx={{ textAlign: 'center', alignItems: 'center' }}>
-                <table width={'50%'}>
+                <table width={'50%'}>s
                     <tbody>
                         <tr>
-                            <td style={{ textAlign: 'right', paddingRight: '10px', width: '48%' }}>Customer ID : </td>
-                            <td style={{ textAlign: 'left', width: '52%' }}>{userDetails.userId}</td>
+                            <td style={{ color: 'black', textAlign: 'right', paddingRight: '10px', width: '48%' }}>Customer ID : </td>
+                            <td style={{ color: 'black', textAlign: 'left', width: '52%' }}>{userDetails.userId}</td>
                         </tr>
                         <tr>
-                            <td style={{ textAlign: 'right', paddingRight: '10px' }}>Customer Name : </td>
-                            <td style={{ textAlign: 'left' }}>{userDetails.firstName} {userDetails.lastName}</td>
+                            <td style={{ color: 'black', textAlign: 'right', paddingRight: '10px' }}>Customer Name : </td>
+                            <td style={{ color: 'black', textAlign: 'left' }}>{userDetails.firstName} {userDetails.lastName}</td>
                         </tr>
                         <tr>
-                            <td style={{ textAlign: 'right', paddingRight: '10px' }}>Customer Email : </td>
-                            <td style={{ textAlign: 'left' }}>{userDetails.email}</td>
+                            <td style={{ color: 'black', textAlign: 'right', paddingRight: '10px' }}>Customer Email : </td>
+                            <td style={{ color: 'black', textAlign: 'left' }}>{userDetails.email}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -310,45 +311,49 @@ export default function Checkout() {
                         mt: 1,
                     }}
                 >
-                    <FormControl
-                        fullWidth
-                        sx={selectStyle}
-                    >
-                        <InputLabel id="location-label">Restaurant</InputLabel>
-                        <Select
-                            labelId="location-label"
-                            id="reservationLocation"
-                            value={orderDetails.reservationLocation}
-                            name="reservationLocation"
-                            label="Location"
-                            onChange={handleChange}
-                        >
-                            {restaurants.map((restaurant) => (
-                                <MenuItem key={restaurant.locationId} value={restaurant.locationId}>
-                                    {restaurant.locationName}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl
-                        fullWidth
-                        sx={selectStyle}
-                    >
-                        <InputLabel id="method-label">Method</InputLabel>
-                        <Select
-                            labelId="method-label"
-                            id="reservationMethod"
-                            value={selectedMethod}
-                            label="Method"
-                            onChange={handleMethodChange}
-                        >
-                            {facilities.map((facility) => (
-                                <MenuItem key={facility.facilityId} value={facility.facilityId}>
-                                    {facility.facilityName}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    {/* First Row: Form Controls */}
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <FormControl fullWidth sx={selectStyle}>
+                                <InputLabel id="location-label">Restaurant</InputLabel>
+                                <Select
+                                    labelId="location-label"
+                                    id="reservationLocation"
+                                    value={orderDetails.reservationLocation}
+                                    name="reservationLocation"
+                                    label="Location"
+                                    onChange={handleChange}
+                                >
+                                    {restaurants.map((restaurant) => (
+                                        <MenuItem key={restaurant.locationId} value={restaurant.locationId}>
+                                            {restaurant.locationName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <FormControl fullWidth sx={selectStyle}>
+                                <InputLabel id="method-label">Method</InputLabel>
+                                <Select
+                                    labelId="method-label"
+                                    id="reservationMethod"
+                                    value={selectedMethod}
+                                    label="Method"
+                                    onChange={handleMethodChange}
+                                >
+                                    {facilities.map((facility) => (
+                                        <MenuItem key={facility.facilityId} value={facility.facilityId}>
+                                            {facility.facilityName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </Grid>
+
+                    {/* Conditional Address Field (spans full width) */}
                     {selectedMethod === 3 && (
                         <TextField
                             margin="normal"
@@ -361,31 +366,43 @@ export default function Checkout() {
                             multiline
                             rows={3}
                             sx={textboxStyle}
-                            // value={orderDetails.reservationAddress || ""}
                             onChange={handleChange}
                         />
                     )}
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['DatePicker']}>
-                            <DatePicker
-                                label="Date"
-                                value={orderDetails.reservationDate}
-                                onChange={(newValue) => handleDateChange("reservationDate", newValue)}
-                                sx={datePicker}
-                            />
-                        </DemoContainer>
-                    </LocalizationProvider>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['TimePicker']}>
-                            <TimePicker
-                                label="Time"
-                                value={orderDetails.reservationTime}
-                                onChange={(newValue) => handleDateChange("reservationTime", newValue)}
-                                sx={datePicker}
-                            />
-                        </DemoContainer>
-                    </LocalizationProvider>
+
+                    {/* Second Row: Date and Time Pickers */}
+                    <Grid container spacing={1} sx={{
+                        mt: 2, display: 'flex',
+                        justifyContent: 'center',
+                    }}>
+                        <Grid item xs={8}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker']}>
+                                    <DatePicker
+                                        label="Date"
+                                        value={orderDetails.reservationDate}
+                                        onChange={(newValue) => handleDateChange("reservationDate", newValue)}
+                                        sx={datePicker}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </Grid>
+
+                        <Grid item xs={8}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['TimePicker']}>
+                                    <TimePicker
+                                        label="Time"
+                                        value={orderDetails.reservationTime}
+                                        onChange={(newValue) => handleDateChange("reservationTime", newValue)}
+                                        sx={datePicker}
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </Grid>
+                    </Grid>
                 </Box>
+
             </Container>
             <Box>
                 <TableContainer sx={{ maxHeight: 600, width: '50%', margin: 'auto', mt: '10px', }}>
@@ -400,11 +417,11 @@ export default function Checkout() {
                         <TableBody>
                             {cartItems.map((cartItem) => (
                                 <TableRow key={cartItem.productId}>
-                                    <TableCell align="center" sx={{ color: 'white' }}>
+                                    <TableCell align="center" sx={{ color: 'black' }}>
                                         {productDetailsMap[cartItem.productId]?.productName || "Loading..."}
                                     </TableCell>
-                                    <TableCell align="center" sx={{ color: 'white' }}>{cartItem.productQuantity}</TableCell>
-                                    <TableCell align="center" sx={{ color: 'white' }}>
+                                    <TableCell align="center" sx={{ color: 'black' }}>{cartItem.productQuantity}</TableCell>
+                                    <TableCell align="center" sx={{ color: 'black' }}>
                                         Rs. {(cartItem.productQuantity || 0) * (productDetailsMap[cartItem.productId]?.productPrice || 0)}.00
                                     </TableCell>
                                 </TableRow>

@@ -301,7 +301,7 @@ export default function ClippedDrawer() {
                                     <ListItemText primary={"Reports"} />
                                 </ListItemButton>
                             </ListItem>
-                            <ListItem key={'gallery'} disablePadding
+                            {/* <ListItem key={'gallery'} disablePadding
                                 onClick={() => navigate('/admin/gallery')}
                                 sx={sectionStyle}
                             >
@@ -313,7 +313,7 @@ export default function ClippedDrawer() {
                                     </ListItemIcon>
                                     <ListItemText primary={"Gallery"} />
                                 </ListItemButton>
-                            </ListItem>
+                            </ListItem> */}
                         </List>
                         <Divider />
                         <Box

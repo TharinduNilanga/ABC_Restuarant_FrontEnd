@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function EditDetails() {
     const navigate = useNavigate();
@@ -27,18 +28,9 @@ export default function EditDetails() {
     });
 
     useEffect(() => {
-        console.log('====================================');
-        console.log("calling");
-        console.log('====================================');
         userId = sessionStorage.getItem('userId');
         setIdUser(userId)
-        console.log('====================================');
-        console.log(userId);
-        console.log('====================================');
         const userRole = sessionStorage.getItem('userRole');
-        console.log('====================================');
-        console.log(!userId || userRole !== '1');
-        console.log('====================================');
         if (!userId || userRole !== '1') {
             navigate('/login');
         } else {
@@ -74,9 +66,11 @@ export default function EditDetails() {
             console.log(idUser);
             console.log('====================================');
             await Axios.put(`${process.env.REACT_APP_ENDPOINT}/api/user/${idUser}`, form);
+            message.success("Profile Deytails Updated Successfully")
             navigate("/admin/profile");
         } catch (error) {
             console.error("Error updating user data:", error);
+            message.success("Profile Deytails Updated Failed")
             setError(error.response ? error.response.data.message : error.message);
         } finally {
             setLoading(false);
@@ -85,20 +79,20 @@ export default function EditDetails() {
 
     const textboxStyle = {
         input: {
-            color: 'white',
+            color: 'black',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             "&.Mui-focused": {
                 "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#fe9e0d",
+                    borderColor: "#00796b",
                     borderWidth: "3px",
                 },
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
             borderColor: "#fe9e0d",
         },
@@ -106,11 +100,12 @@ export default function EditDetails() {
 
     const buttonStyle = {
         mt: 3,
+        mb: 3,
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: ' #cb7a01',
-            color: 'white',
+            bgcolor: ' #ffffff',
+            color: '#00796b',
         },
     };
 
@@ -118,6 +113,7 @@ export default function EditDetails() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                bgcolor: 'white'
             }}
         >
             <Menu />
@@ -134,12 +130,12 @@ export default function EditDetails() {
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: 'white',
-                            color: '#fe9e0d',
+                            backgroundColor: '#00796b',
+                            color: 'white',
                             borderRadius: '10px',
                             ':hover': {
-                                bgcolor: ' #fe9e0d',
-                                color: 'white',
+                                bgcolor: ' white',
+                                color: '#00796b',
                             },
                         }}
                         startIcon={<ArrowBackIosIcon />}
@@ -180,6 +176,7 @@ export default function EditDetails() {
                         <Container
                             component="main"
                             maxWidth="xs"
+                            sx={{ mt: 4, mb: 3, border: '2px solid black', }}
                         >
                             <Typography
                                 component="h1"
@@ -190,6 +187,7 @@ export default function EditDetails() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b',
                                 }}
                             >
                                 Update Profile Details

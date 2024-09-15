@@ -18,7 +18,7 @@ export default function Products() {
             navigate('/login');
         }
     }, [navigate]);
-    
+
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -67,6 +67,7 @@ export default function Products() {
         flexDirection: 'row',
         overflowX: 'scroll',
         flex: '0 0 auto',
+        justifyContent:'center'
     };
 
     return (
@@ -75,6 +76,7 @@ export default function Products() {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100vh',
+                bgcolor: 'white'
             }}
         >
             <AppBar sx={{ display: 'fixed' }} />
@@ -149,7 +151,7 @@ export default function Products() {
                         </Typography>
                     )}
                 </Box>
-                <BottomNav />
+
             </Box>
         </Box>
     );

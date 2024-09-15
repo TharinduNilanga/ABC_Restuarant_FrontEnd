@@ -10,10 +10,11 @@ export default function Bubble(props) {
         marginRight: 'auto',
         mb: '0px',
         borderRadius: '40px 40px 40px 5px',
+        border:"1px solid black"
     };
 
     const customerStyle = {
-        backgroundColor: '#fe9e0d',
+        backgroundColor: ' #00796b',
         color: '#ffffff',
         padding: '10px 25px',
         marginLeft: 'auto',
@@ -30,6 +31,7 @@ export default function Bubble(props) {
                 width: '100%',
                 alignItems: 'center',
                 mb: '8px',
+
             }}
         >
             <Typography

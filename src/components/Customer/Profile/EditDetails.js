@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 export default function EditDetails() {
     let userId = "";
     let navigate = useNavigate();
-    const [idUser,setIdUser] = useState(null);
+    const [idUser, setIdUser] = useState(null);
     useEffect(() => {
         userId = sessionStorage.getItem('userId');
         setIdUser(userId);
@@ -20,7 +20,7 @@ export default function EditDetails() {
             navigate('/login');
         }
     }, [navigate]);
-    
+
 
     // const [role, setRole] = useState('');
     const [loading, setLoading] = useState(true);
@@ -79,32 +79,32 @@ export default function EditDetails() {
 
     const textboxStyle = {
         input: {
-            color: 'white',
+            color: 'black',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             "&.Mui-focused": {
                 "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#fe9e0d",
+                    borderColor: "#00796b",
                     borderWidth: "3px",
                 },
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
     };
 
     const buttonStyle = {
         mt: 3,
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: ' #cb7a01',
-            color: 'white',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
@@ -112,6 +112,8 @@ export default function EditDetails() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                bgcolor: 'white',
+                height:'100vh'
             }}
         >
             <Box
@@ -119,27 +121,13 @@ export default function EditDetails() {
                 sx={{
                     padding: '30px 40px',
                     marginLeft: '240px',
+                    
                 }}
             >
                 <Box
                     sx={{ marginTop: 'auto' }}
                 >
-                    <Button
-                        variant="contained"
-                        sx={{
-                            backgroundColor: 'white',
-                            color: '#fe9e0d',
-                            borderRadius: '10px',
-                            ':hover': {
-                                bgcolor: ' #fe9e0d',
-                                color: 'white',
-                            },
-                        }}
-                        startIcon={<ArrowBackIosIcon />}
-                        onClick={() => navigate("/user/dashboard")}
-                    >
-                        Back
-                    </Button>
+
                     {loading ? (
                         <Box
                             sx={{
@@ -169,10 +157,11 @@ export default function EditDetails() {
                         >
                             {error}
                         </Typography>
-                    ) :(
+                    ) : (
                         <Container
                             component="main"
                             maxWidth="xs"
+                            sx={{ mt: 4, mb: 3, border: '2px solid black', }}
                         >
                             <Typography
                                 component="h1"
@@ -183,6 +172,7 @@ export default function EditDetails() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b',
                                 }}
                             >
                                 Update Profile Details
@@ -242,14 +232,49 @@ export default function EditDetails() {
                                     value={form.email}
                                     onChange={handleChange}
                                 />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={buttonStyle}
-                                >
-                                    Update
-                                </Button>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between', // Aligns content to the right
+                                        textAlign: 'center',
+                                        margin: '20px auto 5px',
+
+                                    }}>
+                                    <Button
+                                        variant="contained"
+
+                                        sx={{
+                                            mt: 3,
+                                            bgcolor: 'white',
+                                            color: '#00796b',
+                                            ':hover': {
+                                                color: 'white',
+                                                background: '#00796b',
+                                            }
+                                        }}
+                                        startIcon={<ArrowBackIosIcon />}
+                                        onClick={() => navigate("/user/dashboard")}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        type="submit"
+
+                                        variant="contained"
+                                        sx={{
+                                            mt: 3,
+                                            color: 'white',
+                                            background: '#00796b',
+                                            ':hover': {
+                                                bgcolor: 'white',
+                                                color: '#00796b',
+                                            }
+                                        }}
+                                    >
+                                        Update
+                                    </Button>
+                                </Box>
+
                             </Box>
                         </Container>
                     )}

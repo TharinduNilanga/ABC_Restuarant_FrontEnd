@@ -39,11 +39,11 @@ export default function CardComponent(props) {
         width: '350px',
         padding: '10px',
         borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 4px 8px black',
         userSelect: 'none',
         ':hover': {
-            border: '2px solid rgba(254, 158, 13, 0.7)',
-            boxShadow: '0px 0px 10px rgba(254, 158, 13, 0.7)',
+            border: '2px solid black',
+            boxShadow: '0px 0px 10px black',
             cursor: 'pointer',
         }
     };
@@ -70,7 +70,7 @@ export default function CardComponent(props) {
                 {props.offer.offerImage ?
                     (
                         <img
-                            src={`/${props.offer.offerImage}`}
+                            src={`data:image/jpeg;base64,${props.offer.offerImage}`}
                             alt="Lunch"
                             style={imgStyle}
                         />

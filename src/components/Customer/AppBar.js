@@ -9,6 +9,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import BottomNav from "./BottomNav"
 
 export default function BackToTop(props) {
 
@@ -63,14 +64,17 @@ export default function BackToTop(props) {
                 }}
             >
                 <Toolbar>
+                    <BottomNav />
                     <img
                         src='/assets/logo.png'
                         alt='ABC Restaurent logo'
                         style={{
                             width: '95px',
+                            marginLeft: '10px'
                         }}
                     // onClick={navigate('/user/dashboard')}
                     />
+
                     <Typography variant="h6" component="div" px={'20px'}>
                         Welcome to ABC Restuarent ... !
                     </Typography>

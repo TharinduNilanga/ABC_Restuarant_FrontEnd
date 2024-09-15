@@ -101,45 +101,46 @@ export default function ChangePassword() {
     };
 
     const textboxStyle = {
-        input: { color: 'white' },
+        input: { color: 'black' },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             borderWidth: "3px",
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
         },
     };
 
     const buttonStyle = {
         mt: 3,
+        mb: 3,
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: '#cb7a01',
-            color: 'white',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
     return (
-        <Grid2 sx={{ minWidth: '800px' }}>
+        <Grid2 sx={{ minWidth: '800px', bgcolor: 'white' }}>
             <Menu />
             <Box component="main" sx={{ padding: '30px 40px', marginLeft: '240px' }}>
                 <Box sx={{ marginTop: 'auto' }}>
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: 'white',
-                            color: '#fe9e0d',
+                            backgroundColor: '#00796b',
+                            color: 'white',
                             borderRadius: '10px',
                             ':hover': {
-                                bgcolor: '#fe9e0d',
-                                color: 'white',
+                                bgcolor: 'white',
+                                color: '#00796b',
                             },
                         }}
                         startIcon={<ArrowBackIosIcon />}
@@ -163,7 +164,7 @@ export default function ChangePassword() {
                             />
                         </Box>
                     ) : (
-                        <Container component="main" maxWidth="xs">
+                        <Container component="main" maxWidth="xs" sx={{ mt: 4, mb: 3, border: '2px solid black', }}>
                             <Typography
                                 component="h1"
                                 variant="h4"
@@ -173,6 +174,7 @@ export default function ChangePassword() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b'
                                 }}
                             >
                                 Change Password

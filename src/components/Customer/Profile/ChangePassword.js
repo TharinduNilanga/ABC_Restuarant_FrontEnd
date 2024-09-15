@@ -10,7 +10,7 @@ export default function ChangePassword() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        const userId = sessionStorage.getItem('userId');
+         userId = sessionStorage.getItem('userId');
         const userRole = sessionStorage.getItem('userRole');
         if (!userId || userRole !== '3') {
             navigate('/login');
@@ -107,17 +107,17 @@ export default function ChangePassword() {
 
 
     const textboxStyle = {
-        input: { color: 'white' },
+        input: { color: 'black' },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             borderWidth: "3px",
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
         },
     };
@@ -133,25 +133,10 @@ export default function ChangePassword() {
     };
 
     return (
-        <Grid2 sx={{ minWidth: '800px' }}>
-            <Box component="main" sx={{ padding: '30px 40px', marginLeft: '240px' }}>
+        <Grid2 sx={{ minWidth: '800px', bgcolor: 'white' ,  height:'100vh'}}>
+            <Box component="main" sx={{ padding: '30px 40px', marginLeft: '80px' }}>
                 <Box sx={{ marginTop: 'auto' }}>
-                    <Button
-                        variant="contained"
-                        sx={{
-                            backgroundColor: 'white',
-                            color: '#fe9e0d',
-                            borderRadius: '10px',
-                            ':hover': {
-                                bgcolor: '#fe9e0d',
-                                color: 'white',
-                            },
-                        }}
-                        startIcon={<ArrowBackIosIcon />}
-                        onClick={() => navigate("/admin/profile")}
-                    >
-                        Back
-                    </Button>
+
                     {loading ? (
                         <Box
                             sx={{
@@ -170,7 +155,7 @@ export default function ChangePassword() {
                             />
                         </Box>
                     ) : (
-                        <Container component="main" maxWidth="xs">
+                        <Container component="main" maxWidth="xs"  sx={{ mt: 4, mb: 3, border: '2px solid black', }}>
                             <Typography
                                 component="h1"
                                 variant="h4"
@@ -180,6 +165,7 @@ export default function ChangePassword() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b',
                                 }}
                             >
                                 Change Password
@@ -232,15 +218,49 @@ export default function ChangePassword() {
                                     error={!passwordsMatch && newPassword.confirmNewPassword !== ''}
                                     helperText={!passwordsMatch && newPassword.confirmNewPassword !== '' ? "Passwords don't match" : ''}
                                 />
-                                <Button
-                                    type="submit"
-                                    fullWidth
-                                    variant="contained"
-                                    sx={buttonStyle}
-                                    disabled={!passwordsMatch}
-                                >
-                                    Change
-                                </Button>
+
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between', // Aligns content to the right
+                                        textAlign: 'center',
+                                        margin: '20px auto 5px',
+
+                                    }}>
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            mt: 3,
+                                            bgcolor: 'white',
+                                            color: '#00796b',
+                                            ':hover': {
+                                                color: 'white',
+                                                background: '#00796b',
+                                            }
+                                        }}
+                                        startIcon={<ArrowBackIosIcon />}
+                                        onClick={() => navigate("/user/profile")}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        type="submit"
+
+                                        variant="contained"
+                                        sx={{
+                                            mt: 3,
+                                            color: 'white',
+                                            background: '#00796b',
+                                            ':hover': {
+                                                bgcolor: 'white',
+                                                color: '#00796b',
+                                            }
+                                        }}
+                                        disabled={!passwordsMatch}
+                                    >
+                                        Change
+                                    </Button>
+                                </Box>
                             </Box>
                         </Container>
                     )};

@@ -62,15 +62,15 @@ export default function Profile() {
         width: '250px',
         margin: '50px',
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: '#cb7a01',
-            color: 'white',
+            bgcolor: 'white',
+            color: ' #00796b',
         },
     };
 
     return (
-        <Grid2 sx={{ minWidth: '800px' }}>
+        <Grid2 sx={{ bgcolor: 'white', minWidth: '800px' ,height:'100vh'}}>
             <Menu />
             <Box component="main" sx={{ padding: '60px 80px', marginLeft: '240px' }}>
                 {loading ? (
@@ -94,7 +94,10 @@ export default function Profile() {
                     <Typography variant='h6' sx={{ textAlign: 'center' }}>{error}</Typography>
                 ) : details ? (
                     <Box sx={{ marginTop: 'auto' }}>
-                        <Container component="main" maxWidth="md">
+                        <Container component="main" maxWidth="md"  sx={{
+                                border: '2px solid black', // Sets a 2px solid black border
+
+                            }}>
                             <Typography
                                 component="h1"
                                 variant="h4"
@@ -104,6 +107,7 @@ export default function Profile() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b',
                                 }}
                             >
                                 Profile Details
@@ -113,85 +117,85 @@ export default function Profile() {
                                     <tbody>
                                         <tr>
                                             <td width={'45%'} align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     First Name
                                                 </Typography>
                                             </td>
                                             <td width={'10%'} align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td width={'45%'} align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     {details.firstName}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     Last Name
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     {details.lastName}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     Address
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     {details.address}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     Email
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     {details.email}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     Role
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#000000', mt: '10px' }}>
                                                     {role.roleName}
                                                 </Typography>
                                             </td>

@@ -33,6 +33,7 @@ export default function Dashboard() {
             }}
         >
             <AppBar sx={{ display: 'fixed' }} />
+           
             <Box
                 sx={{
                     padding: "3% 7%"
@@ -43,7 +44,7 @@ export default function Dashboard() {
                     style={imgStyle}
                 />
             </Box>
-            <BottomNav />
+
         </Box>
     )
 }

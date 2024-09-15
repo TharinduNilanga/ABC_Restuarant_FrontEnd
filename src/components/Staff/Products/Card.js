@@ -12,7 +12,7 @@ export default function CardComponent(props) {
         width: '210px',
         padding: '10px',
         borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 4px 8px black',
         userSelect: 'none',
         ':hover': {
             border: '2px solid rgba(254, 158, 13, 0.7)',
@@ -31,22 +31,22 @@ export default function CardComponent(props) {
 
     const btnStyle = {
         mt: 0,
-        border: '2px solid #fe9e0d',
-        bgcolor: '#ffffff',
-        color: '#fe9e0d',
+        border: '2px solid #00796b',
+        bgcolor: '#00796b',
+        color: '#ffffff',
         ':hover': {
-            bgcolor: '#fe9e0d',
+            bgcolor: '#00796b',
             color: '#ffffff',
         }
     }
 
     const UnavailablebtnStyle = {
         mt: 0,
-        border: '2px solid #fe9e0d',
-        bgcolor: '#ffffff',
-        color: '#fe9e0d',
+        border: '2px solid #aeaeae',
+        bgcolor: '#aeaeae',
+        color: '#ffffff',
         ':hover': {
-            bgcolor: '#fe9e0d',
+            bgcolor: '#aeaeae',
             color: '#ffffff',
         }
     }
@@ -55,12 +55,23 @@ export default function CardComponent(props) {
         <Card key={props.product.id} sx={cardStyle}>
             <Box>
                 {props.product.productImage ?
-                    (
+                    (<>
+                        <Typography
+                            sx={{
+                                fontWeight: 'bold',
+                                fontSize: '18px',
+                                mt: 0,
+                            }}
+                        >
+                            {props.name.categoryName}
+                        </Typography>
                         <img
-                            src={`/${props.product.productImage}`}
+                            src={`data:image/jpeg;base64,${props.product.productImage}`}
                             alt="Lunch"
                             style={imgStyle}
                         />
+                    </>
+
                     ) : (
                         <img
                             src="/assets/empty.jpeg"
@@ -105,14 +116,14 @@ export default function CardComponent(props) {
             {props.product.productStatus === "Available" ? (
                 <Button
                     variant="contained"
-                    disabled
+
                     sx={btnStyle}>
                     Available
                 </Button>
             ) : (
                 <Button
                     variant="outlined"
-                    disabled
+
                     sx={UnavailablebtnStyle}>
                     Unavailable
                 </Button>

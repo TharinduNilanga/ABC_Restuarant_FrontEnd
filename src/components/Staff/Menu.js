@@ -35,7 +35,7 @@ export default function Menu() {
     };
 
     const sectionStyle = {
-        border: '2px solid #fe9901',
+        border: '2px solid #00796b',
         borderRadius: '10px',
         ':hover': {
             border: '2px solid rgba(255, 255, 255, .6)',
@@ -45,7 +45,7 @@ export default function Menu() {
     };
 
     const logOutSectionStyle = {
-        border: '2px solid #fe9901',
+        border: '2px solid #00796b',
         borderRadius: '10px',
         ':hover': {
             bgcolor: '#ff666660',
@@ -64,7 +64,7 @@ export default function Menu() {
                 position="fixed"
                 sx={{
                     zIndex: (theme) => theme.zIndex.drawer + 1,
-                    bgcolor: '#fe9e0d'
+                    bgcolor: '#00796b'
                 }}
             >
                 <Toolbar>
@@ -83,13 +83,13 @@ export default function Menu() {
                         />
                     </Box>
                     <Typography variant="h5" fontWeight={'bold'} noWrap component="div" sx={{ px: '30px' }}>
-                        Staff - ABC Restaurent Management System
+                         ABC Restaurent Staff
                     </Typography>
                 </Toolbar>
             </AppBar>
             <Drawer
                 variant="permanent"
-                bgcolor='#fe9e0d'
+                bgcolor='#00796b'
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
@@ -100,7 +100,7 @@ export default function Menu() {
                 <Box
                     sx={{
                         overflow: 'auto',
-                        bgcolor: '#fe9901',
+                        bgcolor: '#00796b',
                         color: 'white',
                         fontWeight: 'bold',
                         height: '100vh',

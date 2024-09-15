@@ -53,7 +53,7 @@ export default function AddFacility() {
 
     const textboxStyle = {
         input: {
-            color: '#00796b',
+            color: '#000000',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -66,18 +66,20 @@ export default function AddFacility() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#00796b",
+            color: "#000000",
             fontWeight: "bold",
         },
     };
 
     const buttonStyle = {
         mt: 3,
+        mb: 3,
         color: 'white',
         background: '#00796b',
         ':hover': {
-            bgcolor: '#004d40',
-            color: 'white',
+
+            color: '#00796b',
+            background: 'white',
         },
     };
 
@@ -85,6 +87,8 @@ export default function AddFacility() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                height: '100vh',
+
             }}
         >
             <Menu />
@@ -94,19 +98,20 @@ export default function AddFacility() {
                     padding: '30px 40px',
                     marginLeft: '240px',
                     backgroundColor: 'white',
-                    height: '642px'
+                    height: '100vh',
+                    // height: '642px'
                 }}
             >
                 <Box>
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: 'white',
-                            color: '#00796b',
+                            bgcolor: '#00796b',
+                            color: 'white',
                             borderRadius: '10px',
                             ':hover': {
-                                bgcolor: '#00796b',
-                                color: 'white',
+                                backgroundColor: 'white',
+                                color: '#00796b',
                             },
                         }}
                         startIcon={<ArrowBackIosIcon />}
@@ -117,7 +122,7 @@ export default function AddFacility() {
                     <Container
                         component="main"
                         maxWidth="xs"
-                        sx={{ mt: 4, }}
+                        sx={{ mt: 4, mb: 3, border: '2px solid black', }}
                     >
                         <Typography
                             component="h1"
@@ -128,7 +133,7 @@ export default function AddFacility() {
                                 mb: 2,
                                 fontWeight: 'bold',
                                 textDecoration: 'underline',
-                                color: '#00796b',
+                                color: 'black',
                             }}
                         >
                             Add New Facility

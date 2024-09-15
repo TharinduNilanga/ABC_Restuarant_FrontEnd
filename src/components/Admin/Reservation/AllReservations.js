@@ -120,13 +120,14 @@ export default function AllReservations() {
     
 
     const buttonStyle = {
-        backgroundColor: '#cb7a01',
+        backgroundColor: '#00796b',
         color: '#ffffff',
         borderRadius: '5px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid #00796b',
         alignContent: 'center',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+            bgcolor: ' white',
+            color: '#00796b',
         },
     };
 

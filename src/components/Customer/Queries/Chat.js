@@ -16,7 +16,7 @@ export default function Chat() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        const userId = sessionStorage.getItem('userId');
+        userId = sessionStorage.getItem('userId');
         const userRole = sessionStorage.getItem('userRole');
         if (!userId || userRole !== '3') {
             navigate('/login');
@@ -46,13 +46,26 @@ export default function Chat() {
             }
         };
         fetchData();
-    }, []);
+        const intervalId = setInterval(() => {
+            loadChat();
+        }, 10000); // 10 seconds = 10000 ms
+
+        // Cleanup the interval when component unmounts
+        return () => clearInterval(intervalId);
+    }, [userId]);
 
     const loadChat = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_ENDPOINT}/api/query/allQueries`);
+            userId = sessionStorage.getItem('userId');
+            const response = await axios.get(`${ process.env.REACT_APP_ENDPOINT }/api/query/allQueries`);
+            console.log("response -> ", response.data);
+            console.log(userId);
+
             const queries = response.data.filter(query => query.queryCustomer === userId);
             setQueries(queries);
+            newQuery.queryCustomer = userId;
+            console.log("Queries -> ", queries);
+
         } catch (error) {
             console.error("There was an error fetching the queries!", error);
             throw error;
@@ -84,22 +97,22 @@ export default function Chat() {
             color: 'white'
         },
         backgroundColor: '#4e4f4f',
-        border: '2px solid #fe9e0d',
+        border: '2px solid #00796b',
         borderRadius: '5px',
         marginRight: '3px',
     };
 
     const buttonStyle = {
-        backgroundColor: '#cb7a01',
+        backgroundColor: 'gray',
         color: '#ffffff',
         height: '58px',
         borderRadius: '5px',
         mt: '8px',
         marginLeft: '3px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid  #6c85ff',
         alignContent: 'center',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+              backgroundColor: 'green',
         },
     };
 
@@ -109,6 +122,7 @@ export default function Chat() {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100vh',
+                bgcolor: 'white'
             }}
         >
             <AppBar sx={{ display: 'fixed' }} />
@@ -118,8 +132,10 @@ export default function Chat() {
                     flexDirection: 'column',
                     height: '80vh',
                     mt: '20px',
-                    width: '80%',
+                    width: '50%',
                     margin: 'auto',
+
+
                 }}
             >
                 {loading ? (
@@ -147,9 +163,9 @@ export default function Chat() {
                                 display: 'flex',
                                 flexDirection: 'column',
                                 height: '100%',
-                                border: '1px solid rgba(254, 158, 13, .6)',
+                                border: '1px solid #00796b',
                                 borderRadius: '10px',
-                                boxShadow: '0 0 5px #fe9e0d',
+                                boxShadow: '0 0 5px #00796b',
                                 padding: '10px',
                             }}
                         >
@@ -163,9 +179,10 @@ export default function Chat() {
                             sx={{
                                 display: 'flex',
                                 margin: 'auto auto 0px',
-                                width: '60%',
+                                width: '100%',
                                 height: '100px',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                justifyContent: 'flex-end'
                             }}
                         >
                             <TextField
@@ -185,15 +202,15 @@ export default function Chat() {
                                     sx={buttonStyle}
                                     disabled={!newQuery.queryText.trim()}
                                 >
-                                    <SendIcon fontSize='large' />
+                                    <SendIcon fontSize='large' sx={{ color: 'green' }} />
                                 </Button>
                             </Stack>
                         </Box>
                     </>
                 )}
             </Box>
-            <Typography sx={{ fontSize: '10px', color: 'red', textAlign: 'center'}}>* Please note that this is not a live chat. *</Typography>
-            <BottomNav />
+            <Typography sx={{ fontSize: '10px', color: 'red', textAlign: 'center' }}>* Please note that this is not a live chat. *</Typography>
+
         </Box>
     );
 }

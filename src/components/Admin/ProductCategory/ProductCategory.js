@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { message } from "antd";
 
 export default function ProductCategory() {
     const navigate = useNavigate();
@@ -49,11 +50,13 @@ export default function ProductCategory() {
     const deleteCategory = async (id) => {
         try {
             const response = await Axios.delete(`${process.env.REACT_APP_ENDPOINT}/api/productCategory/${id}`);
-            if (response.status === 200) {
+            if (response) {
+                message.success('Category deleted successfully')
                 console.log('Category deleted successfully');
                 loadCategories();
             }
         } catch (error) {
+            message.error('Category deleted Failed')
             console.error('Error deleting category:', error);
         }
     };
@@ -61,7 +64,9 @@ export default function ProductCategory() {
     return (
         <Grid2
             sx={{
-                minWidth: '800px'
+                minWidth: '800px',
+                bgcolor: 'white',
+                height: '100vh'
             }}
         >
             <Menu />
@@ -72,16 +77,19 @@ export default function ProductCategory() {
                     marginLeft: '240px',
                     bgcolor: 'white',
                     color: 'black',
-                     height: '642px'
+                    height: '642px'
                 }}
             >
                 <Box
                     sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between', // Aligns content to the right
                         textAlign: 'center',
-                        margin: '20px auto 40px',
-                        
+                        margin: '20px auto 5px',
+
                     }}
                 >
+                    <Typography fontSize="20px" sx={{ color: 'black', fontWeight: 'bold' }}>Product Category Form</Typography>
                     <Button
                         variant="contained"
                         onClick={() => navigate('/admin/addProductCategory')}
@@ -133,7 +141,7 @@ export default function ProductCategory() {
                                     <Table stickyHeader aria-label="sticky table">
                                         <TableHead>
                                             <TableRow>
-                                                <TableCell
+                                                {/* <TableCell
                                                     align="center"
                                                     sx={{
                                                         backgroundColor: '#f5f5f5',
@@ -141,7 +149,7 @@ export default function ProductCategory() {
                                                     }}
                                                 >
                                                     Category ID
-                                                </TableCell>
+                                                </TableCell> */}
                                                 <TableCell
                                                     align="center"
                                                     sx={{
@@ -183,20 +191,30 @@ export default function ProductCategory() {
                                         <TableBody>
                                             {Categories.map((category) => (
                                                 <TableRow key={category.id}>
-                                                    <TableCell align="center" component="th" scope="row">{category.categoryId}</TableCell>
+                                                    {/* <TableCell align="center" component="th" scope="row">{category.categoryId}</TableCell> */}
                                                     <TableCell align="center">{category.categoryName}</TableCell>
                                                     <TableCell align="center">{category.categoryDescription}</TableCell>
-                                                    <TableCell align="center">{category.categoryImage}</TableCell>
+
+                                                    <TableCell align="center">
+                                                        {category.categoryImage && (
+                                                            <img
+                                                                src={`data:image/jpeg;base64,${category.categoryImage}`}
+                                                                alt="Category"
+                                                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                                            />
+                                                        )}
+                                                    </TableCell>
                                                     <TableCell align="center">
                                                         <IconButton
                                                             onClick={() => navigate('/admin/editProductCategory', { state: { id: category.id } })}
                                                             aria-label="edit"
                                                             sx={{
                                                                 color: '#00796b',
-                                                                backgroundColor: '#f0f0f0',
+                                                                backgroundColor: 'white',
                                                                 marginRight: '3px',
                                                                 ':hover': {
-                                                                    bgcolor: '#e0e0e0',
+                                                                    color: 'white',
+                                                                    backgroundColor: '#00796b',
                                                                 }
                                                             }}
                                                         >
@@ -206,11 +224,12 @@ export default function ProductCategory() {
                                                             aria-label="delete"
                                                             onClick={() => deleteCategory(category.id)}
                                                             sx={{
-                                                                color: '#d32f2f',
-                                                                backgroundColor: '#f0f0f0',
+                                                                color: '#ff6666',
+                                                                backgroundColor: 'white',
                                                                 marginLeft: '3px',
                                                                 ':hover': {
-                                                                    bgcolor: '#e0e0e0',
+                                                                    color: '#ff0000',
+                                                                    backgroundColor: '#00796b',
                                                                 }
                                                             }}
                                                         >

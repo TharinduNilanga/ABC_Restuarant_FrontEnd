@@ -64,10 +64,10 @@ export default function Profile() {
         width: '250px',
         margin: '50px',
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: ' #cb7a01',
-            color: 'white',
+            color: '#00796b',
+            background: 'white',
         },
     };
 
@@ -77,6 +77,7 @@ export default function Profile() {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100vh',
+                bgcolor:'white'
             }}
         >
             <AppBar sx={{ display: 'fixed' }} />
@@ -113,11 +114,15 @@ export default function Profile() {
                     </Typography>
                 ) : (
                     <Box
-                        sx={{ marginTop: 'auto' }}
+                        sx={{ marginTop: '10px' }}
                     >
                         <Container
                             component="main"
                             maxWidth="md"
+                            sx={{
+                                border: '2px solid black', // Sets a 2px solid black border
+
+                            }}
                         >
                             <Typography
                                 component="h1"
@@ -128,6 +133,7 @@ export default function Profile() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b'
                                 }}
                             >
                                 Profile Details
@@ -141,68 +147,68 @@ export default function Profile() {
                                     <tbody>
                                         <tr>
                                             <td width={'45%'} align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     First Name
                                                 </Typography>
                                             </td>
                                             <td width={'10%'} align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td width={'45%'} align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     {form.firstName}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     Last Name
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     {form.lastName}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     Address
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     {form.address}
                                                 </Typography>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="right">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     Email
                                                 </Typography>
                                             </td>
                                             <td align="center">
-                                                <Typography variant="h6" sx={{ color: '#fe9e0d', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     :
                                                 </Typography>
                                             </td>
                                             <td align="left">
-                                                <Typography variant="h6" sx={{ color: '#ffffff', mt: '10px' }}>
+                                                <Typography variant="h6" sx={{ color: '#00796b', mt: '10px' }}>
                                                     {form.email}
                                                 </Typography>
                                             </td>
@@ -238,7 +244,7 @@ export default function Profile() {
                     </Box>
                 )}
             </Box>
-            <BottomNav />
+            
         </Box>
     )
 }

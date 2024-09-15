@@ -5,15 +5,14 @@ export default function CardComponent(props) {
 
     const cardStyle = {
         display: 'flex',
-        flexDirection: 'row',
-        flex: '0 0 auto',
-        scrollBehavior: 'auto',
+        flexDirection: 'column',
+        flex: ' 0 0 auto',
+        scrolllBehavior: 'auto',
         margin: '10px',
-        width: '95%',
-        height: '400px',
+        width: '350px',
         padding: '10px',
         borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        boxShadow: '0 4px 8px black',
         userSelect: 'none',
     };
 
@@ -27,7 +26,7 @@ export default function CardComponent(props) {
         <Card key={props.facility.id} sx={cardStyle}>
             <Box
                 sx={{
-                    writingMode: 'vertical-lr',
+                   
                     height: '100%',
                     display: 'flex',
                     alignItems: 'center',
@@ -43,7 +42,7 @@ export default function CardComponent(props) {
                         fontSize: 'clamp(12px, 3cqw, 98px)',
                         lineHeight: 1.2,
                         whiteSpace: 'nowrap',
-                        transform: 'rotate(180deg)',
+                       
                     }}
                 >
                     {props.facility.facilityName}
@@ -51,7 +50,7 @@ export default function CardComponent(props) {
             </Box>
             <Box
                 sx={{
-                    writingMode: 'vertical-lr',
+                    // writingMode: 'sideways-lr',
                     height: '100%',
                     display: 'flex',
                     alignItems: 'center',
@@ -67,7 +66,7 @@ export default function CardComponent(props) {
                         fontSize: '16px',
                         lineHeight: 1.2,
                         whiteSpace: 'nowrap',
-                        transform: 'rotate(180deg)',
+                        
                     }}
                 >
                     {props.facility.facilityDescription}
@@ -81,13 +80,13 @@ export default function CardComponent(props) {
             >
                 {props.facility.offerImage ? (
                     <img
-                        src={`/${props.facility.offerImage}`}
+                        src={`data:image/jpeg;base64,/${props.facility.offerImage}`}
                         alt="Lunch"
                         style={imgStyle}
                     />
                 ) : (
                     <img
-                        src={`/assets/${props.facility.facilityName.toLowerCase()}.jpg`}
+                        src={`/assets/${props.facility.facilityName.toLowerCase()}.png`}
                         alt={props.facility.facilityName.toLowerCase()}
                         style={imgStyle}
                     />

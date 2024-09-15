@@ -89,29 +89,30 @@ export default function Chat() {
             color: 'white'
         },
         backgroundColor: '#4e4f4f',
-        border: '2px solid #fe9e0d',
+        border: '2px solid white',
         borderRadius: '5px',
         marginRight: '3px',
     };
 
     const buttonStyle = {
-        backgroundColor: '#cb7a01',
+        backgroundColor: 'gray',
         color: '#ffffff',
         height: '58px',
         borderRadius: '5px',
         mt: '8px',
         marginLeft: '3px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid white',
         alignContent: 'center',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+            bgcolor: ' green',
         },
     };
 
     return (
         <Grid2
             sx={{
-                minWidth: '800px'
+                minWidth: '800px',
+                bgcolor: '#00796b'
             }}
         >
             <Menu />
@@ -126,12 +127,14 @@ export default function Chat() {
                 <Button
                     variant="contained"
                     sx={{
-                        backgroundColor: 'white',
-                        color: '#fe9e0d',
+                        backgroundColor: '#00796b',
+                        color: 'white',
                         borderRadius: '10px',
+                        border: "2px solid white",
                         ':hover': {
-                            bgcolor: ' #fe9e0d',
-                            color: 'white',
+                            bgcolor: 'white',
+                            color: '#00796b',
+                            border: "2px solid #00796b",
                         },
                     }}
                     startIcon={<ArrowBackIosIcon />}
@@ -172,9 +175,9 @@ export default function Chat() {
                                     display: 'flex',
                                     flexDirection: 'column',
                                     height: '100%',
-                                    border: '1px solid rgba(254, 158, 13, .6)',
+                                    border: '1px solid white',
                                     borderRadius: '10px',
-                                    boxShadow: '0 0 5px #fe9e0d',
+                                    boxShadow: '0 0 5px white',
                                     padding: '10px',
                                 }}
                             >
@@ -210,7 +213,11 @@ export default function Chat() {
                                         sx={buttonStyle}
                                         disabled={!newQuery.queryText.trim()}
                                     >
-                                        <SendIcon fontSize='large' />
+                                        <SendIcon fontSize='large' sx={{
+                                            color: "white", ':hover': {
+                                                color: "white"
+                                            },
+                                        }} />
                                     </Button>
                                 </Stack>
                             </Box>

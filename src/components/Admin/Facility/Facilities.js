@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { message } from "antd";
 
 export default function Facilities() {
     const navigate = useNavigate();
@@ -60,12 +61,15 @@ export default function Facilities() {
         setDeleting(true);
         try {
             const response = await Axios.delete(`${process.env.REACT_APP_ENDPOINT}/api/facility/${id}`);
-            if (response.status === 200) {
+ 
+            if (response.status === 204) {
                 console.log('Facility deleted successfully');
+                message.success("Facility Deleted Successfully")
                 loadFacilities();
             }
         } catch (error) {
             console.error('Error deleting facility:', error);
+            message.error("Facility Deleted Failed")
         } finally {
             setDeleting(false);
         }
@@ -75,7 +79,8 @@ export default function Facilities() {
         <Grid2
             sx={{
                 minWidth: '800px',
-                backgroundColor:'white'
+                backgroundColor: 'white',
+                 height: '100vh'
             }}
         >
             <Menu />
@@ -84,15 +89,19 @@ export default function Facilities() {
                 sx={{
                     padding: '30px 40px',
                     marginLeft: '240px',
-                     height: '642px'
+                  
                 }}
             >
                 <Box
                     sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between', // Aligns content to the right
                         textAlign: 'center',
-                        margin: '20px auto 40px',
+                        margin: '20px auto 5px',
+
                     }}
                 >
+                    <Typography fontSize="20px" sx={{ color: 'black', fontWeight: 'bold' }}>Facility Form</Typography>
                     <Button
                         variant="contained"
                         onClick={() => navigate('/admin/addFacility')}
@@ -189,11 +198,12 @@ export default function Facilities() {
                                                         onClick={() => navigate('/admin/editFacility', { state: { id: facility.facilityId } })}
                                                         aria-label="edit"
                                                         sx={{
-                                                            color: '#66ff99',
-                                                            backgroundColor: '#262626',
+                                                            color: '#00796b',
+                                                            backgroundColor: 'white',
                                                             marginRight: '3px',
                                                             ':hover': {
-                                                                color: '#009933',
+                                                                color: 'white',
+                                                                backgroundColor: '#00796b',
                                                             }
                                                         }}
                                                     >
@@ -204,10 +214,11 @@ export default function Facilities() {
                                                         onClick={() => deleteFacilities(facility.facilityId)}
                                                         sx={{
                                                             color: '#ff6666',
-                                                            backgroundColor: '#262626',
+                                                            backgroundColor: 'white',
                                                             marginLeft: '3px',
                                                             ':hover': {
                                                                 color: '#ff0000',
+                                                                backgroundColor: '#00796b',
                                                             }
                                                         }}
                                                     >

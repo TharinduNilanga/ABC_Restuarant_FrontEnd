@@ -67,7 +67,7 @@ export default function EditFacility() {
 
     const textboxStyle = {
         input: {
-            color: '#00796b',
+            color: '#000000',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -80,7 +80,7 @@ export default function EditFacility() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#00796b",
+            color: "#000000",
             fontWeight: "bold",
         },
     };
@@ -91,8 +91,8 @@ export default function EditFacility() {
         color: 'white',
         background: '#00796b',
         ':hover': {
-            bgcolor: '#004d40',
-            color: 'white',
+            bgcolor: '#ffffff',
+            color: '#00796b',
         },
     };
 
@@ -100,6 +100,7 @@ export default function EditFacility() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                 height: '100vh'
             }}
         >
             <Menu />
@@ -109,7 +110,7 @@ export default function EditFacility() {
                     padding: '30px 40px',
                     marginLeft: '240px',
                     backgroundColor: 'white',
-                     height: '642px'
+                   height: '100vh'
                 }}
             >
                 <Box>
@@ -132,6 +133,7 @@ export default function EditFacility() {
                     <Container
                         component="main"
                         maxWidth="xs"
+                        sx={{ mt: 4, mb: 3, border: '2px solid black', }}
                     >
                         <Typography
                             component="h1"
@@ -142,7 +144,7 @@ export default function EditFacility() {
                                 mb: '10px',
                                 fontWeight: 'bold',
                                 textDecoration: 'underline',
-                                color: '#00796b',
+                                color: '#000000',
                             }}
                         >
                             Edit Facility

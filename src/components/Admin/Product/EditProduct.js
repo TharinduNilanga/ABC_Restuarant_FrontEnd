@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Menu from "../Menu";
+import { useLocation } from "react-router";
 import {
     Box,
     FormControl,
@@ -25,6 +26,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 // Create a custom theme
 const theme = createTheme({
@@ -92,25 +94,49 @@ export default function AddProduct() {
         productCategory: [],
         productStatus: "",
     });
-
+    const location = useLocation();
+    const { productId } = location.state;
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [imageBase64, setImageBase64] = useState(''); // For storing the image as base64
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         const userId = sessionStorage.getItem('userId');
         const userRole = sessionStorage.getItem('userRole');
+        console.log('====================================');
+        console.log(productId);
+        console.log('====================================');
         if (!userId || userRole !== '1') {
             navigate('/login');
         } else {
             loadCategories();
+            loadProduct()
         }
     }, [navigate]);
 
+    const loadProduct = async () => {
+        setLoading(true);
+        try {
+            const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/product/${productId}`);
+            setImagePreview(`data:image/jpeg;base64,${result.data.productImage}`)
+            setForm(result.data);
+        } catch (error) {
+            console.error("Error loading user data:", error);
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
     const loadCategories = async () => {
         setLoading(true);
         try {
             const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/productCategory/allProductCategories`);
+            // console.log('====================================');
+            // console.log(result);
+            // console.log('====================================');
+            // setImagePreview(`data:image/jpeg;base64,${result.data.productImage}`)
             setCategories(result.data);
         } catch (error) {
             console.error("Error loading categories:", error);
@@ -136,31 +162,51 @@ export default function AddProduct() {
         }));
     };
 
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    //     setLoading(true);
+
+    //     // const formData = new FormData();
+    //     // formData.append('product', new Blob([JSON.stringify(form)], { type: 'application/json' }));
+
+    //     // if (form.productImage) {
+    //     //     formData.append('file', form.productImage);
+    //     // }
+
+    //     try {
+    //         // const response = await Axios.post(
+    //         //     `${process.env.REACT_APP_ENDPOINT}/api/product/addProduct`,
+    //         //     formData,
+    //         //     {
+    //         //         headers: {
+    //         //             'Content-Type': 'multipart/form-data',
+    //         //         },
+    //         //     }
+    //         // );
+    //         await Axios.post(`${process.env.REACT_APP_ENDPOINT}/product/addProducty/${productId}`, form);
+    //         message.success("Product Category Updated Successfully")
+    //         navigate("/admin/products");
+    //     } catch (error) {
+    //         console.error(error);
+    //         setError(error.message || "An error occurred while adding the product.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
     const handleSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
-
-        const formData = new FormData();
-        formData.append('product', new Blob([JSON.stringify(form)], { type: 'application/json' }));
-
-        if (form.productImage) {
-            formData.append('file', form.productImage);
-        }
-
+        console.log('====================================');
+        console.log(form);
+        console.log('====================================');
         try {
-            const response = await Axios.post(
-                `${process.env.REACT_APP_ENDPOINT}/api/product/addProduct`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
+            const response = await Axios.put(`${process.env.REACT_APP_ENDPOINT}/api/product/${productId}`, form);
+            message.success("Product Updated Successfully")
             navigate("/admin/products");
         } catch (error) {
             console.error(error);
-            setError(error.message || "An error occurred while adding the product.");
+            message.success("Product Updated Failed")
+            setError(error);
         } finally {
             setLoading(false);
         }
@@ -177,7 +223,39 @@ export default function AddProduct() {
         whiteSpace: 'nowrap',
         width: 1,
     });
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
 
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]; // Extract the base64 part
+                setImageBase64(base64String);
+                setImagePreview(reader.result); // Use the whole result for preview
+
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    "productImage": base64String,
+                }));
+            };
+            reader.readAsDataURL(file); // Convert file to base64
+        }
+    };
+
+    const fileUploadBtn = {
+        width: '100%',
+        height: '50px',
+        mt: 1.5,
+        mb: 1,
+        color: 'white',
+        background: '#00796b',
+        border: '2px solid #004d40',
+        ':hover': {
+            bgcolor: '#004d40',
+            color: 'white',
+            border: '2px solid #00332b',
+        },
+    };
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -185,6 +263,7 @@ export default function AddProduct() {
                 sx={{
                     minWidth: '800px',
                     bgcolor: '#fafafa',
+                     height: '100vh'
                 }}
             >
                 <Menu />
@@ -229,12 +308,13 @@ export default function AddProduct() {
                             <Button
                                 variant="contained"
                                 sx={{
-                                    backgroundColor: 'white',
-                                    color: '#00796b',
+
+                                    bgcolor: '#00796b',
+                                    color: 'white',
                                     borderRadius: '10px',
                                     ':hover': {
-                                        bgcolor: '#00796b',
-                                        color: 'white',
+                                        backgroundColor: 'white',
+                                        color: '#00796b',
                                     },
                                 }}
                                 startIcon={<ArrowBackIosIcon />}
@@ -245,6 +325,10 @@ export default function AddProduct() {
                             <Container
                                 component="main"
                                 maxWidth="xs"
+                                sx={{
+                                    border: '2px solid black', // Sets a 2px solid black border
+
+                                }}
                             >
                                 <Typography
                                     component="h1"
@@ -255,10 +339,10 @@ export default function AddProduct() {
                                         mb: '10px',
                                         fontWeight: 'bold',
                                         textDecoration: 'underline',
-                                        color: '#00796b'
+                                        color: 'black'
                                     }}
                                 >
-                                    Add Product
+                                    Edit Product
                                 </Typography>
                                 <Box
                                     component="form"
@@ -299,14 +383,24 @@ export default function AddProduct() {
                                         variant="contained"
                                         tabIndex={-1}
                                         startIcon={<CloudUploadIcon />}
+                                        sx={fileUploadBtn}
                                     >
                                         Upload Image
-                                        <VisuallyHiddenInput
-                                            type="file"
-                                            accept="image/jpg, image/jpeg, image/png"
-                                            onChange={(e) => setForm({ ...form, productImage: e.target.files[0] })}
-                                        />
+                                        <input type="file" accept="image/jpg, image/jpeg, image/png" hidden onChange={handleImageChange} />
                                     </Button>
+                                    {imagePreview && (
+                                        <Box
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center', // Aligns content to the right
+
+                                                margin: '20px auto 5px',
+
+                                            }}
+                                        >
+                                            <img src={imagePreview} alt="Preview" style={{ width: '200px', marginBottom: '20px' }} />
+                                        </Box>
+                                    )}
                                     <TextField
                                         margin="normal"
                                         required
@@ -350,6 +444,7 @@ export default function AddProduct() {
                                             aria-labelledby="productStatus"
                                             name="productStatus"
                                             onChange={handleChange}
+                                            value={form.productStatus}
                                         >
                                             <FormControlLabel value="Available" control={<Radio />} label="Available" />
                                             <FormControlLabel value="Unavailable" control={<Radio />} label="Unavailable" />
@@ -359,8 +454,9 @@ export default function AddProduct() {
                                         type="submit"
                                         fullWidth
                                         variant="contained"
+                                        sx={{ mb: 3 }}
                                     >
-                                        Add
+                                        Update
                                     </Button>
                                 </Box>
                             </Container>

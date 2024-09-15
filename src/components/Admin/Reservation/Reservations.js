@@ -20,7 +20,8 @@ export default function Reservations() {
         <Grid2
             sx={{
                 minWidth: '800px',
-                bgcolor: 'white'
+                bgcolor: 'white',
+                 height: '100vh'
             }}
         >
             <Menu />

@@ -23,6 +23,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function EditOffer() {
     const navigate = useNavigate();
@@ -45,6 +46,8 @@ export default function EditOffer() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [imageBase64, setImageBase64] = useState(''); // For storing the image as base64
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         const userId = sessionStorage.getItem('userId');
@@ -60,6 +63,7 @@ export default function EditOffer() {
     const loadOffer = async () => {
         try {
             const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/offer/${id}`);
+            setImagePreview(`data:image/jpeg;base64,${result.data.offerImage}`)
             setForm({
                 ...result.data,
                 offerStartDate: dayjs(result.data.offerStartDate),
@@ -111,9 +115,11 @@ export default function EditOffer() {
         setLoading(true);
         try {
             await Axios.put(`${process.env.REACT_APP_ENDPOINT}/api/offer/${id}`, form);
+            message.success("Offer Updated Successfully")
             navigate("/admin/offers");
         } catch (error) {
             console.error(error);
+            message.success("Offer Updated Failed")
             setLoading(false);
         }
     };
@@ -131,9 +137,9 @@ export default function EditOffer() {
     });
 
     const selectStyle = {
-        color: '#00796b',
+        color: '#000000',
         '& .Mui-selected': {
-            color: '#00796b',
+            color: '#000000',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -146,14 +152,14 @@ export default function EditOffer() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#00796b",
+            color: "#000000",
             fontWeight: "bold",
         },
     };
 
     const textboxStyle = {
         input: {
-            color: '#00796b',
+            color: '#000000',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -166,7 +172,7 @@ export default function EditOffer() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#00796b",
+            color: "#000000",
             fontWeight: "bold",
         },
     };
@@ -177,8 +183,8 @@ export default function EditOffer() {
         color: 'white',
         background: '#00796b',
         ':hover': {
-            bgcolor: '#004d40',
-            color: 'white',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
@@ -188,10 +194,10 @@ export default function EditOffer() {
         mt: 1.5,
         mb: 1,
         color: 'white',
-        background: '#262626',
+        background: '#00796b',
         border: '2px solid #00796b',
         ':hover': {
-            bgcolor: '#262626',
+            bgcolor: 'white',
             color: '#00796b',
             border: '2px solid #004d40',
         },
@@ -202,14 +208,14 @@ export default function EditOffer() {
         mt: '1.5',
         mb: 1,
         '& .MuiInputBase-input': {
-            color: '#00796b',
+            color: '#000000',
         },
         '& .MuiOutlinedInput-notchedOutline': {
             borderWidth: "2px",
             borderColor: "#00796b",
         },
         '& .MuiInputLabel-root': {
-            color: "#00796b",
+            color: "#000000",
             fontWeight: "bold",
         },
         '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
@@ -217,14 +223,34 @@ export default function EditOffer() {
             borderWidth: "3px",
         },
         '& .MuiSvgIcon-root': {
-            color: '#00796b',
+            color: '#000000',
         },
     };
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
 
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]; // Extract the base64 part
+                setImageBase64(base64String);
+                setImagePreview(reader.result); // Use the whole result for preview
+                console.log('====================================');
+                console.log(reader.result);
+                console.log('====================================');
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    "offerImage": base64String,
+                }));
+            };
+            reader.readAsDataURL(file); // Convert file to base64
+        }
+    };
     return (
         <Grid2
             sx={{
                 minWidth: '800px',
+                 height: '100vh'
             }}
         >
             <Menu />
@@ -258,12 +284,13 @@ export default function EditOffer() {
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: 'white',
-                                color: '#00796b',
+                                bgcolor: '#00796b',
+                                color: 'white',
                                 borderRadius: '10px',
                                 ':hover': {
-                                    bgcolor: '#00796b',
-                                    color: 'white',
+
+                                    backgroundColor: 'white',
+                                    color: '#00796b',
                                 },
                             }}
                             startIcon={<ArrowBackIosIcon />}
@@ -274,6 +301,10 @@ export default function EditOffer() {
                         <Container
                             component="main"
                             maxWidth="xs"
+                            sx={{
+                                border: '2px solid black', // Sets a 2px solid black border
+                                bgcolor: '#daffe7',
+                            }}
                         >
                             <Typography
                                 component="h1"
@@ -284,7 +315,7 @@ export default function EditOffer() {
                                     mb: '10px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
-                                    color: '#00796b',
+                                    color: 'black',
                                 }}
                             >
                                 Edit Offer
@@ -334,29 +365,30 @@ export default function EditOffer() {
                                     value={form.offerDescription}
                                     onChange={handleChange}
                                 />
-                                <FormControl
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}
-                                    fullWidth
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    sx={fileUploadBtn}
+                                    startIcon={<CloudUploadIcon />}
                                 >
-                                    <Button
-                                        component="label"
-                                        variant="contained"
-                                        sx={fileUploadBtn}
-                                        startIcon={<CloudUploadIcon />}
+
+                                    Upload Image
+                                    <input type="file" accept="image/jpg, image/jpeg, image/png" hidden onChange={handleImageChange} />
+
+                                </Button>
+                                {imagePreview && (
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center', // Aligns content to the right
+
+                                            margin: '20px auto 5px',
+
+                                        }}
                                     >
-                                        Upload Image
-                                        <VisuallyHiddenInput
-                                            accept="image/*"
-                                            id="offerImage"
-                                            name="offerImage"
-                                            type="file"
-                                            onChange={handleChange}
-                                        />
-                                    </Button>
-                                </FormControl>
+                                        <img src={imagePreview} alt="Preview" style={{ width: '200px', marginBottom: '20px' }} />
+                                    </Box>
+                                )}
                                 <TextField
                                     margin="normal"
                                     required
@@ -433,16 +465,30 @@ export default function EditOffer() {
                                         sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}
                                     >
                                         <FormControlLabel
-                                            value="active"
-                                            sx={{ color: 'black'  }}
-                                            control={<Radio sx={{ color: '#00796b', '&.Mui-checked': { color: '#004d40' } }} />}
-                                            label="Active"
+                                            value="Available"
+                                            control={<Radio sx={{
+                                                color: '#00796b',
+                                                '&.Mui-checked': {
+                                                    color: '#004d40',
+                                                },
+                                            }} />}
+                                            label="Available"
+                                            sx={{
+                                                color: '#00796b',
+                                            }}
                                         />
                                         <FormControlLabel
-                                            value="inactive"
-                                            sx={{ color: 'black'  }}
-                                            control={<Radio sx={{ color: '#00796b', '&.Mui-checked': { color: 'white' } }} />}
-                                            label="Inactive"
+                                            value="Unavailable"
+                                            control={<Radio sx={{
+                                                color: '#00796b',
+                                                '&.Mui-checked': {
+                                                    color: '#004d40',
+                                                },
+                                            }} />}
+                                            label="Unavailable"
+                                            sx={{
+                                                color: '#00796b',
+                                            }}
                                         />
                                     </RadioGroup>
                                 </FormControl>

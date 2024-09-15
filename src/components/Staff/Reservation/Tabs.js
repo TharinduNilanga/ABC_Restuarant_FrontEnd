@@ -38,12 +38,12 @@ export default function Tabs() {
                             label="All"
                             value="1"
                             sx={{
-                                color: value === '1' ? '#fe9e0d' : '#ffffff',
+                                color: value === '1' ? '#00796b' : '#00796b',
                                 '&.Mui-selected': {
-                                    color: '#fe9e0d',
+                                    color: '#00796b',
                                 },
                                 '&:hover': {
-                                    color: '#fe9e0d',
+                                    color: '#00796b',
                                 }
                             }}
                         />
@@ -51,12 +51,12 @@ export default function Tabs() {
                             label="Not Finished"
                             value="2"
                             sx={{
-                                color: value === '2' ? '#fe9e0d' : '#ffffff',
+                                color: value === '2' ? '#00796b' : '#00796b',
                                 '&.Mui-selected': {
-                                    color: '#fe9e0d',
+                                    color: '#00796b',
                                 },
                                 '&:hover': {
-                                    color: '#fe9e0d',
+                                    color: '#00796b',
                                 }
                             }}
                         />
@@ -64,12 +64,12 @@ export default function Tabs() {
                             label="Finished"
                             value="3"
                             sx={{
-                                color: value === '3' ? '#fe9e0d' : '#ffffff',
+                                color: value === '3' ? '#00796b' : '#00796b',
                                 '&.Mui-selected': {
-                                    color: '#fe9e0d',
+                                    color: '#00796b',
                                 },
                                 '&:hover': {
-                                    color: '#fe9e0d',
+                                    color: '#00796b',
                                 }
                             }}
                         />

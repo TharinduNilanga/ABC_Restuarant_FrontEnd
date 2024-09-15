@@ -108,17 +108,17 @@ export default function ChangePassword() {
     };
 
     const textboxStyle = {
-        input: { color: 'white' },
+        input: { color: 'black' },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "black",
         },
         "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#fe9e0d",
+            borderColor: "black",
             borderWidth: "3px",
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
         },
     };
@@ -126,15 +126,15 @@ export default function ChangePassword() {
     const buttonStyle = {
         mt: 3,
         color: 'white',
-        background: '#fe9e0d',
+        backgroundColor: '#00796b',
         ':hover': {
-            bgcolor: '#cb7a01',
-            color: 'white',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
     return (
-        <Grid2 sx={{ minWidth: '800px' }}>
+        <Grid2  sx={{ bgcolor: 'white', minWidth: '800px' ,height:'100vh'}}>
             <Menu />
             <Box component="main" sx={{ padding: '30px 40px', marginLeft: '240px' }}>
                 {loading ? (
@@ -171,13 +171,13 @@ export default function ChangePassword() {
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: 'white',
-                                color: '#fe9e0d',
-                                borderRadius: '10px',
+                                mt: 3,
+                                bgcolor: 'white',
+                                color: '#00796b',
                                 ':hover': {
-                                    bgcolor: '#fe9e0d',
                                     color: 'white',
-                                },
+                                    background: '#00796b',
+                                }
                             }}
                             startIcon={<ArrowBackIosIcon />}
                             onClick={() => navigate("/staff/profile")}
@@ -194,6 +194,7 @@ export default function ChangePassword() {
                                     mb: '30px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b',
                                 }}
                             >
                                 Change Password

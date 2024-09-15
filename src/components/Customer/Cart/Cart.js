@@ -55,15 +55,18 @@ export default function Cart() {
         mt: '30px',
         mb: '10px',
         padding: '5px 80px',
-        backgroundColor: '#cb7a01',
+        backgroundColor: '#00796b',
         color: '#ffffff',
         borderRadius: '5px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid #00796b',
         alignContent: 'center',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+
+            backgroundColor: '#ffffff',
+            color: '#00796b',
         },
     };
+    // color: '#00796b',
 
     return (
         <Box
@@ -71,20 +74,33 @@ export default function Cart() {
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100vh',
+                bgcolor: 'white'
             }}
         >
             <AppBar sx={{ display: 'fixed' }} />
             <Box>
                 <Box component="main" sx={box1Style}>
-                    <Typography
-                        variant="h3"
+
+                    <Box
                         sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-start',
                             textAlign: 'left',
-                            marginBottom: '30px',
+                            alignItems: 'flex-start',
+
                         }}
                     >
-                        Cart
-                    </Typography>
+                        <Typography
+                            variant="h3"
+                            sx={{
+                                textAlign: 'left',
+                                marginBottom: '30px',
+                                color: '#00796b',
+                            }}
+                        >
+                            Cart
+                        </Typography>
+                    </Box>
                     {loading ? (
                         <Box
                             sx={{

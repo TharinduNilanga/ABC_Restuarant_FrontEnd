@@ -117,18 +117,20 @@ export default function Details() {
 
     const buttonStyle = {
         mt: '40px',
-        backgroundColor: '#cb7a01',
-        color: '#ffffff',
+
         borderRadius: '5px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid #00796b',
         alignContent: 'center',
+        color: 'white',
+        background: '#00796b',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
     return (
-        <Grid2 sx={{ minWidth: '800px' }}>
+        <Grid2 sx={{ minWidth: '800px', backgroundColor: 'white',  height: '100vh'}}>
             <Menu />
             <Box
                 component="main"
@@ -140,12 +142,13 @@ export default function Details() {
                 <Button
                     variant="contained"
                     sx={{
-                        backgroundColor: 'white',
-                        color: '#fe9e0d',
-                        borderRadius: '10px',
+
+                        marginLeft: '3px',
+                        color: 'white',
+                        background: '#00796b',
                         ':hover': {
-                            bgcolor: ' #fe9e0d',
-                            color: 'white',
+                            bgcolor: 'white',
+                            color: '#00796b',
                         },
                     }}
                     startIcon={<ArrowBackIosIcon />}
@@ -157,7 +160,7 @@ export default function Details() {
                     <Typography
                         variant="h5"
                         sx={{
-                            color: ' #fe9e0d',
+                            color: ' #00796b',
                             textDecoration: 'underline'
                         }}
                     >
@@ -181,79 +184,79 @@ export default function Details() {
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td align="right"><b>Reservation ID</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Reservation ID</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" style={{ color: '#00796b', }}>
                                             {reservations.reservationId}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td width="35%" align="right"><b>Customer ID</b></td>
-                                        <td width="10%"><b>:</b></td>
-                                        <td width="55%" align="left" scope="row">
+                                        <td width="35%" align="right" style={{ color: '#00796b', }}><b>Customer ID</b></td>
+                                        <td width="10%" style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td width="55%" align="left" scope="row" style={{ color: '#00796b', }}>
                                             {reservations.customerId}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Customer Name</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Customer Name</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {customerDetails.firstName} {customerDetails.lastName}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Customer Email</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Customer Email</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {customerDetails.email}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Type</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Type</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {type.facilityName}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Date</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }} ><b>Date</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {date(reservations.reservationDate)}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Time</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Time</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {time(reservations.reservationDate)}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Note</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Note</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {reservations.reservationNote || "-"}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Location</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Location</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {restaurent.locationName}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Status</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Status</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {reservations.reservationStatus}
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Products</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Products</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             {products.map((product) => (
                                                 <Typography key={product.name}>
                                                     {product.name} x {product.quantity}
@@ -262,9 +265,9 @@ export default function Details() {
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td align="right"><b>Total</b></td>
-                                        <td><b>:</b></td>
-                                        <td align="left" scope="row">
+                                        <td align="right" style={{ color: '#00796b', }}><b>Total</b></td>
+                                        <td style={{ color: '#00796b', }}><b>:</b></td>
+                                        <td align="left" scope="row" style={{ color: '#00796b', }}>
                                             Rs. {reservations.reservtionTotal || 0}
                                         </td>
                                     </tr>

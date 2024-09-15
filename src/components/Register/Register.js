@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, TextField, Link, Grid, Box, Typography, Container } from '@mui/material';
 import Footer from '../Footer/Footer';
+import Axios from "axios";
+import { message } from 'antd';
 
 export default function Register() {
     const navigate = useNavigate();
@@ -11,9 +13,11 @@ export default function Register() {
         address: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        role: 3
     });
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [loading, setLoading] = useState(false)
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -23,17 +27,40 @@ export default function Register() {
         }));
     };
 
-    const handleSubmit = (event) => {
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     if (passwordsMatch) {
+    //         // Proceed with the registration process
+    //         console.log({
+    //             firstName: formData.firstName,
+    //             lastName: formData.lastName,
+    //             address: formData.address,
+    //             email: formData.email,
+    //             password: formData.password,
+    //         });
+    //     } else {
+    //         console.error("Passwords do not match.");
+    //     }
+    // };
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (passwordsMatch) {
-            // Proceed with the registration process
-            console.log({
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                address: formData.address,
-                email: formData.email,
-                password: formData.password,
-            });
+            setLoading(true);
+            try {
+                // API call to register the user
+                const response = await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/user/addUser`, formData);
+ 
+                if(response.status===201){
+                    message.success("user registration success")
+                }
+                console.log("Registration Successful:", response.data);
+                navigate('/login'); // Redirect to login page after successful registration
+            } catch (error) {
+                console.error("Error during registration:", error);
+                message.error("user registration failed")
+            } finally {
+                setLoading(false);
+            }
         } else {
             console.error("Passwords do not match.");
         }

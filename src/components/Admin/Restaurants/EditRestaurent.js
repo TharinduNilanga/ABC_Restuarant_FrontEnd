@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function AddUser() {
 
@@ -25,7 +26,7 @@ export default function AddUser() {
         locationCity: "",
         locationDistrict: "",
         locationPhone: "",
-        locationFacilities: "",
+        locationFacilities: [],
     });
     const [Facilities, setFacilities] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -44,10 +45,10 @@ export default function AddUser() {
 
     const loadRestaurent = async () => {
         try {
-            console.log('====================================');
-            console.log(locationId);
-            console.log('====================================');
+
             const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/restaurent/${locationId}`);
+            console.log(result);
+
             setForm(result.data);
         } catch (error) {
             console.error("Error loading user data:", error);
@@ -80,6 +81,8 @@ export default function AddUser() {
 
     const handleFacilitiesChange = (event) => {
         const { value } = event.target;
+        console.log(value);
+
         setForm((prevForm) => ({
             ...prevForm,
             locationFacilities: typeof value === 'string' ? value.split(',') : value,
@@ -90,20 +93,22 @@ export default function AddUser() {
         event.preventDefault();
         try {
             const response = await Axios.put(`${process.env.REACT_APP_ENDPOINT}/api/restaurent/${locationId}`, form);
+            message.success("Restuarant Updated Succesfully")
             navigate("/admin/restaurants");
         } catch (error) {
             console.error(error);
+            message.error("Restuarant Updated Failed")
         }
     };
 
     const selectStyle = {
-        color: 'white',
+        color: 'black',
         '& .Mui-selected': {
             color: 'white',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             "&.Mui-focused": {
                 "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#fe9e0d",
@@ -112,30 +117,30 @@ export default function AddUser() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "#fe9e0d",
             fontWeight: "bold",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
     };
 
     const textboxStyle = {
         input: {
-            color: 'white',
+            color: 'black',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
             "&.Mui-focused": {
                 "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "#fe9e0d",
+                    borderColor: "#00796b",
                     borderWidth: "3px",
                 },
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#ffffff",
+            color: "black",
             fontWeight: "bold",
-            borderColor: "#fe9e0d",
+            borderColor: "#00796b",
         },
     };
 
@@ -143,10 +148,10 @@ export default function AddUser() {
         mt: '30px',
         mb: 2,
         color: 'white',
-        background: '#fe9e0d',
+        background: '#00796b',
         ':hover': {
-            bgcolor: ' #cb7a01',
-            color: 'white',
+            bgcolor: ' white',
+            color: '#00796b',
         },
     };
 
@@ -154,7 +159,8 @@ export default function AddUser() {
         <Grid2
             sx={{
                 minWidth: '800px',
-                  bgcolor:'white'
+                bgcolor: 'white',
+                height: '100%'
             }}
         >
             <Menu />
@@ -163,7 +169,7 @@ export default function AddUser() {
                 sx={{
                     padding: '30px 40px',
                     marginLeft: '240px',
-                      height:'642px'
+
                 }}
             >
                 {loading ? (
@@ -188,12 +194,12 @@ export default function AddUser() {
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: 'white',
-                                color: '#fe9e0d',
+                                backgroundColor: '#00796b',
+                                color: 'white',
                                 borderRadius: '10px',
                                 ':hover': {
-                                    bgcolor: ' #fe9e0d',
-                                    color: 'white',
+                                    bgcolor: ' white',
+                                    color: '#00796b',
                                 },
                             }}
                             startIcon={<ArrowBackIosIcon />}
@@ -214,6 +220,7 @@ export default function AddUser() {
                                     mb: '10px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
+                                    color: '#00796b'
                                 }}
                             >
                                 Edit Restaurant
@@ -301,6 +308,8 @@ export default function AddUser() {
                                         value={form.locationFacilities}
                                         onChange={handleFacilitiesChange}
                                         renderValue={(selected) => selected.map(facilityId => {
+                                            console.log(facilityId);
+
                                             const facility = Facilities.find(f => f.facilityId === facilityId);
                                             return facility ? facility.facilityName : '';
                                         }).join(', ')}
@@ -323,6 +332,7 @@ export default function AddUser() {
                     </Box>
                 )}
             </Box>
+
         </Grid2>
     );
 }

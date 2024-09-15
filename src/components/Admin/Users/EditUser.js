@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function EditUser() {
 
@@ -82,9 +83,11 @@ export default function EditUser() {
         setLoading(true);
         try {
             await Axios.put(`${process.env.REACT_APP_ENDPOINT}/api/user/${userId}`, form);
+            message.success("User Update Successfully")
             navigate("/admin/users");
         } catch (error) {
             console.error(error);
+            message.success("User Update Failed")
             setError(error);
         } finally {
             setLoading(false);
@@ -138,8 +141,8 @@ export default function EditUser() {
         color: 'white',
         background: '#00796b',
         ':hover': {
-            bgcolor: '#004d40',
-            color: 'white',
+            backgroundColor: 'white',
+            color: '#00796b',
         },
     };
 
@@ -147,6 +150,8 @@ export default function EditUser() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                bgcolor: 'white',
+                height: '100vh'
             }}
         >
             <Menu />
@@ -163,12 +168,13 @@ export default function EditUser() {
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: 'white',
-                            color: '#00796b',
+
+                            bgcolor: '#00796b',
+                            color: 'white',
                             borderRadius: '10px',
                             ':hover': {
-                                bgcolor: '#00796b',
-                                color: 'white',
+                                backgroundColor: 'white',
+                                color: '#00796b',
                             },
                         }}
                         startIcon={<ArrowBackIosIcon />}
@@ -199,7 +205,7 @@ export default function EditUser() {
                             maxWidth="xs"
                             sx={{
                                 border: '2px solid black', // Sets a 2px solid black border
-                                
+
                             }}
                         >
                             <Typography

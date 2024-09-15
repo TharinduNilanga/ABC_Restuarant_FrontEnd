@@ -7,10 +7,12 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function AddProduct() {
     const navigate = useNavigate();
-
+    const [imageBase64, setImageBase64] = useState(''); // For storing the image as base64
+    const [imagePreview, setImagePreview] = useState('');
     const [form, setForm] = useState({
         productName: "",
         productDescription: "",
@@ -67,26 +69,26 @@ export default function AddProduct() {
         event.preventDefault();
         setLoading(true);
 
-        const formData = new FormData();
-        formData.append('product', new Blob([JSON.stringify(form)], { type: 'application/json' }));
+        // const formData = new FormData();
+        // formData.append('product', new Blob([JSON.stringify(form)], { type: 'application/json' }));
 
-        if (form.productImage) {
-            formData.append('file', form.productImage);
-        }
+        // if (form.productImage) {
+        //     formData.append('file', form.productImage);
+        // }
 
         try {
-            const response = await Axios.post(
-                `${process.env.REACT_APP_ENDPOINT}/api/product/addProduct`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                    },
-                }
-            );
+            const response = await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/product/addProduct`, form);
+            // const response = await Axios.post(
+            //     `${process.env.REACT_APP_ENDPOINT}/api/product/addProduct`,x
+            // );
+            if(response){
+                message.success("Product added Successfully..")
+            }
             navigate("/admin/products");
         } catch (error) {
             console.error(error);
+
+            message.success("Product added Failed..")
             setError(error.message || "An error occurred while adding the product.");
         } finally {
             setLoading(false);
@@ -171,12 +173,30 @@ export default function AddProduct() {
             border: '2px solid #00796b',
         },
     };
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
 
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]; // Extract the base64 part
+                setImageBase64(base64String);
+                setImagePreview(reader.result); // Use the whole result for preview
+ 
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    "productImage": base64String,
+                }));
+            };
+            reader.readAsDataURL(file); // Convert file to base64
+        }
+    };
     return (
         <Grid2
             sx={{
                 minWidth: '800px',
                 bgcolor: '#fafafa',
+                 height: '100%'
             }}
         >
             <Menu />
@@ -221,12 +241,13 @@ export default function AddProduct() {
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: 'white',
-                                color: '#00796b',
+                                bgcolor: '#00796b',
+                                color: 'white',
                                 borderRadius: '10px',
                                 ':hover': {
-                                    bgcolor: '#00796b',
-                                    color: 'white',
+
+                                    backgroundColor: 'white',
+                                    color: '#00796b',
                                 },
                             }}
                             startIcon={<ArrowBackIosIcon />}
@@ -237,6 +258,10 @@ export default function AddProduct() {
                         <Container
                             component="main"
                             maxWidth="xs"
+                            sx={{
+                                border: '2px solid black', // Sets a 2px solid black border
+
+                            }}
                         >
                             <Typography
                                 component="h1"
@@ -247,7 +272,7 @@ export default function AddProduct() {
                                     mb: '10px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
-                                    color: '#00796b'
+                                    color: 'black'
                                 }}
                             >
                                 Add Product
@@ -296,12 +321,23 @@ export default function AddProduct() {
                                     sx={fileUploadBtn}
                                 >
                                     Upload Image
-                                    <VisuallyHiddenInput
-                                        type="file"
-                                        accept="image/jpg, image/jpeg, image/png"
-                                        onChange={(e) => setForm({ ...form, productImage: e.target.files[0] })}
-                                    />
+                                    Upload Image
+                                    <input type="file" accept="image/jpg, image/jpeg, image/png" hidden onChange={handleImageChange} />
+
                                 </Button>
+                                {imagePreview && (
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center', // Aligns content to the right
+
+                                            margin: '20px auto 5px',
+
+                                        }}
+                                    >
+                                        <img src={imagePreview} alt="Preview" style={{ width: '200px', marginBottom: '20px' }} />
+                                    </Box>
+                                )}
                                 <TextField
                                     margin="normal"
                                     required
@@ -314,7 +350,6 @@ export default function AddProduct() {
                                     value={form.productPrice}
                                     onChange={handleChange}
                                 />
-
                                 <FormControl fullWidth margin="normal" required sx={textboxStyle}>
                                     <InputLabel id="selectCategory">Categories</InputLabel>
                                     <Select

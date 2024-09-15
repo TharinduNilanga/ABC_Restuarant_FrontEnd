@@ -36,6 +36,7 @@ export default function CardComponent(props) {
         flex: ' 0 0 auto',
         scrolllBehavior: 'auto',
         margin: '10px 10px 50px 10px',
+        bgcolor: '#00796b',
         width: '350px',
         padding: '10px',
         borderRadius: '10px',
@@ -62,6 +63,7 @@ export default function CardComponent(props) {
         mt: 1,
         textAlign: 'center',
         fontWeight: 'bold',
+        color: '#ffffff',
     }
 
     return (
@@ -70,7 +72,7 @@ export default function CardComponent(props) {
                 {props.offer.offerImage ?
                     (
                         <img
-                            src={`/${props.offer.offerImage}`}
+                            src={`data:image/jpeg;base64,${props.offer.offerImage}`}
                             alt="Lunch"
                             style={imgStyle}
                         />
@@ -87,7 +89,7 @@ export default function CardComponent(props) {
                 sx={{
                     all: 'unset',
                     padding: '5px',
-                    textAlign: 'center',
+                    textAlign: 'left',
                 }}
             >
                 <Typography
@@ -95,7 +97,7 @@ export default function CardComponent(props) {
                         fontWeight: 'bold',
                         fontSize: '18px',
                         mt: 0,
-                        
+                        color: '#ffffff',
                     }}
                 >
                     {props.offer.offerName}
@@ -104,13 +106,15 @@ export default function CardComponent(props) {
                     sx={{
                         fontSize: '12px',
                         userSelect: 'text',
+                        color: '#ffffff',
                     }}
                 >
                     Code : {props.offer.offerId}
                 </Typography>
                 <Typography
                     sx={{
-                        fontSize: '12px'
+                        fontSize: '12px',
+                        color: '#ffffff',
                     }}
                 >
                     For : {getCategoryNames(props.offer.offerCategory)}
@@ -133,14 +137,16 @@ export default function CardComponent(props) {
                 >
                     <Typography
                         sx={{
-                            fontSize: '12px'
+                            fontSize: '12px',
+                            color: '#ffffff',
                         }}
                     >
                         From : {getDate(props.offer.offerStartDate)}
                     </Typography>
                     <Typography
                         sx={{
-                            fontSize: '12px'
+                            fontSize: '12px',
+                            color: '#ffffff',
                         }}
                     >
                         To : {getDate(props.offer.offerEndDate)}

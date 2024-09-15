@@ -10,10 +10,13 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { styled } from '@mui/material/styles';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function AddProductCategory() {
 
     let navigate = useNavigate();
+    const [imageBase64, setImageBase64] = useState(''); // For storing the image as base64
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         const userId = sessionStorage.getItem('userId');
@@ -44,9 +47,11 @@ export default function AddProductCategory() {
         setLoading(true);
         try {
             const response = await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/productCategory/addProductCategory`, form);
+            message.success("Product Category Added Successfully")
             navigate("/admin/productCategory");
         } catch (error) {
             console.error(error);
+            message.success("Product Category Added SuccessfFaieldully")
             setError(error);
         } finally {
             setLoading(false);
@@ -87,11 +92,13 @@ export default function AddProductCategory() {
 
     const buttonStyle = {
         mt: 3,
+        mb: 3,
+
         color: 'white',
         background: '#00796b',
         ':hover': {
-            bgcolor: '#004d40',
-            color: 'white',
+            bgcolor: 'white',
+            color: '#00796b',
         },
     };
 
@@ -104,11 +111,45 @@ export default function AddProductCategory() {
         background: '#00796b',
         border: '2px solid #004d40',
         ':hover': {
-            bgcolor: '#004d40',
-            color: 'white',
+            bgcolor: 'white',
+            color: '#00796b',
             border: '2px solid #00332b',
         },
     }
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]; // Extract the base64 part
+                setImageBase64(base64String);
+                setImagePreview(reader.result); // Use the whole result for preview
+                console.log('====================================');
+                console.log(reader.result);
+                console.log('====================================');
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    "categoryImage": base64String,
+                }));
+            };
+            reader.readAsDataURL(file); // Convert file to base64
+        }
+    };
+    const handleImageUpload = async () => {
+        if (!imageBase64) {
+            alert("Please select an image to upload");
+            return;
+        }
+
+        // try {
+        //     const response = await axios.post(`${process.env.REACT_APP_ENDPOINT}/upload-image`, { image: imageBase64 });
+        //     alert('Image uploaded successfully!');
+        console.log(imageBase64);
+        // } catch (error) {
+        //     console.error('Error uploading image:', error);
+        // }
+    };
 
     return (
         <Grid2
@@ -116,6 +157,7 @@ export default function AddProductCategory() {
                 minWidth: '800px',
                 bgcolor: 'white',
                 color: 'black',
+                 height: '100vh'
             }}
         >
             <Menu />
@@ -124,19 +166,20 @@ export default function AddProductCategory() {
                 sx={{
                     padding: '30px 40px',
                     marginLeft: '240px',
-                    height: '642px'
+                  
                 }}
             >
                 <Box>
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: 'white',
-                            color: '#00796b',
+
+                            bgcolor: '#00796b',
+                            color: 'white',
                             borderRadius: '10px',
                             ':hover': {
-                                bgcolor: '#00796b',
-                                color: 'white',
+                                backgroundColor: 'white',
+                                color: '#00796b'
                             },
                         }}
                         startIcon={<ArrowBackIosIcon />}
@@ -147,6 +190,10 @@ export default function AddProductCategory() {
                     <Container
                         component="main"
                         maxWidth="xs"
+                        sx={{
+                            border: '2px solid black', // Sets a 2px solid black border
+
+                        }}
                     >
                         <Typography
                             component="h1"
@@ -155,7 +202,7 @@ export default function AddProductCategory() {
                                 textAlign: 'center',
                                 fontWeight: 'bold',
                                 textDecoration: 'underline',
-                                color: '#00796b',
+                                color: 'black',
                             }}
                         >
                             Add New Product Category
@@ -199,11 +246,38 @@ export default function AddProductCategory() {
                                 variant="contained"
                                 tabIndex={-1}
                                 startIcon={<CloudUploadIcon />}
-                                sx={fileUploadBtn}
+                                sx={{
+                                    width: '100%',
+                                    height: '50px',
+                                    mt: 1.5,
+                                    mb: 1,
+                                    color: 'white',
+                                    background: '#00796b',
+                                    border: '2px solid #004d40',
+                                    ':hover': {
+                                        bgcolor: 'white',
+                                        color: '#00796b',
+                                        border: '2px solid #00332b',
+                                    },
+                                }}
                             >
                                 Upload Image
-                                <VisuallyHiddenInput type="file" accept="image/jpg, image/jpeg, image/png" />
+                                <input type="file" accept="image/jpg, image/jpeg, image/png" hidden onChange={handleImageChange} />
+
                             </Button>
+                            {imagePreview && (
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center', // Aligns content to the right
+
+                                        margin: '20px auto 5px',
+
+                                    }}
+                                >
+                                    <img src={imagePreview} alt="Preview" style={{ width: '200px', marginBottom: '20px' }} />
+                                </Box>
+                            )}
                             {loading ? (
                                 <Box
                                     sx={{
@@ -247,6 +321,6 @@ export default function AddProductCategory() {
                     </Container>
                 </Box>
             </Box>
-        </Grid2>
+        </Grid2 >
     );
 }

@@ -11,13 +11,16 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { styled } from '@mui/material/styles';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
+
 
 export default function EditProductCategory() {
 
     const navigate = useNavigate();
     const location = useLocation();
     const { id } = location.state;
-
+    const [imageBase64, setImageBase64] = useState(''); // For storing the image as base64
+    const [imagePreview, setImagePreview] = useState('');
     const [form, setForm] = useState({
         categoryName: "",
         categoryDescription: "",
@@ -40,6 +43,8 @@ export default function EditProductCategory() {
         setLoading(true);
         try {
             const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/productCategory/${id}`);
+            // message.success("Product Category Updated Successfully")
+            setImagePreview(`data:image/jpeg;base64,${result.data.categoryImage}`)
             setForm(result.data);
         } catch (error) {
             console.error("Error loading category data:", error);
@@ -63,12 +68,32 @@ export default function EditProductCategory() {
         setError(null);
         try {
             await Axios.put(`${process.env.REACT_APP_ENDPOINT}/api/productCategory/${id}`, form);
+            message.success("Product Category Updated Successfully")
             navigate("/admin/productCategory");
         } catch (error) {
             console.error(error);
+            message.success("Product Category Updated Failed")
             setError(error);
         } finally {
             setLoading(false);
+        }
+    };
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]; // Extract the base64 part
+                setImageBase64(base64String);
+                setImagePreview(reader.result); // Use the whole result for preview
+
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    "categoryImage": base64String,
+                }));
+            };
+            reader.readAsDataURL(file); // Convert file to base64
         }
     };
 
@@ -136,7 +161,7 @@ export default function EditProductCategory() {
                 minWidth: '800px',
                 bgcolor: 'white',
                 color: 'black',
-                height: '642px'
+                height: '100vh'
             }}
         >
             <Menu />
@@ -242,8 +267,21 @@ export default function EditProductCategory() {
                                     sx={fileUploadBtn}
                                 >
                                     Upload Image
-                                    <VisuallyHiddenInput type="file" accept="image/jpg, image/jpeg, image/png" />
+                                    <input type="file" accept="image/jpg, image/jpeg, image/png" hidden onChange={handleImageChange} />
                                 </Button>
+                                {imagePreview && (
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center', // Aligns content to the right
+
+                                            margin: '20px auto 5px',
+
+                                        }}
+                                    >
+                                        <img src={imagePreview} alt="Preview" style={{ width: '200px', marginBottom: '20px' }} />
+                                    </Box>
+                                )}
                                 <Button
                                     type="submit"
                                     fullWidth

@@ -4,7 +4,7 @@ import Bill from './Bill';
 import { useNavigate, useLocation } from "react-router-dom";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Axios from "axios";
@@ -17,6 +17,7 @@ export default function Checkout() {
     const [userDetails, setUserDetails] = useState(null);
     const [type, setType] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [openPopup, setOpenPopup] = useState(false);  // Popup state
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -49,9 +50,17 @@ export default function Checkout() {
         }
     };
 
+    const handleOpenPopup = () => {
+        setOpenPopup(true);
+    };
+
+    const handleClosePopup = () => {
+        setOpenPopup(false);
+    };
+
     const downloadPDF = () => {
         if (!reservations) return;
-        
+
         const input = pdfRef.current;
         html2canvas(input).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
@@ -67,6 +76,7 @@ export default function Checkout() {
             pdf.save(`invoice - Reservation No: ${reservations.reservationId}.pdf`);
         });
         updateStatus();
+        handleClosePopup();  // Close the popup after downloading the PDF
     };
 
     const updateStatus = async () => {
@@ -82,7 +92,6 @@ export default function Checkout() {
             navigate('/admin/reservations');
         } catch (error) {
             console.error("Error updating status:", error);
-            // Consider showing an error message or navigating to an error page
         }
     };
 
@@ -104,47 +113,98 @@ export default function Checkout() {
     }
 
     return (
-        <Grid2 sx={{ minWidth: '800px' }}>
+        <Grid2 sx={{ minWidth: '800px', height: '100vh' }}>
             <Menu />
             <Box
                 component="main"
                 sx={{
                     padding: '30px 20px',
                     marginLeft: '240px',
-                    scrollBehavior: 'smooth', 
+                    scrollBehavior: 'smooth',
+
                 }}
             >
-                <Button
-                    variant="contained"
-                    sx={{
-                        backgroundColor: 'white',
-                        color: '#fe9e0d',
-                        borderRadius: '10px',
-                        ':hover': {
-                            bgcolor: ' #fe9e0d',
-                            color: 'white',
-                        },
-                    }}
-                    startIcon={<ArrowBackIosIcon />}
-                    onClick={() => navigate(-1)}
-                >
-                    Back
-                </Button>
-                <Box
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between', // Aligns content to the right
+                    textAlign: 'center',
+                    margin: '20px auto 5px',
+
+                }}>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            backgroundColor: '#00796b',
+                            color: '#ffffff',
+                            borderRadius: '5px',
+                            border: '2px solid #00796b',
+                            ml: 5,
+                            alignContent: 'center',
+                            ':hover': {
+                                bgcolor: ' white',
+                                color: '#00796b',
+                            },
+                        }}
+                        startIcon={<ArrowBackIosIcon />}
+                        onClick={() => navigate(-1)}
+                    >
+                        Back
+                    </Button>
+                    <Button
+                        variant="contained"
+                        sx={{
+                            mt: '5px',
+                            padding: '5px 80px',
+                            backgroundColor: 'green',
+                            color: '#ffffff',
+                            borderRadius: '5px',
+                            border: '2px solid green',
+                            alignContent: 'center',
+                            ':hover': {
+                                bgcolor: ' white',
+                                color: '#00796b',
+                            },
+                        }}
+                        onClick={handleOpenPopup}  // Open the popup
+                    >
+                        Pay
+                    </Button>
+                </Box>
+
+
+                {/* <Box
                     sx={{
                         width: '100%',
                         textAlign: 'center',
                         overflow: 'hidden'
                     }}
                 >
-                    <Button
-                        variant="contained"
-                        sx={buttonStyle}
-                        onClick={downloadPDF}
-                    >
-                        Pay
-                    </Button>
-                </Box>
+
+                </Box> */}
+
+                {/* Popup Dialog for Bill Preview */}
+                <Dialog
+                    open={openPopup}
+                    onClose={handleClosePopup}
+                    maxWidth="md"
+                    fullWidth
+                >
+                    <DialogTitle sx={{ color: 'white' }}>Bill Preview</DialogTitle>
+                    <DialogContent dividers>
+                        <div ref={pdfRef}>
+                            <Bill userDetails={userDetails} customerDetails={customerDetails} products={products} reservation={reservations} restaurent={restaurent} type={type} />
+                        </div>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClosePopup} color="secondary">
+                            Cancel
+                        </Button>
+                        <Button onClick={downloadPDF} color="primary">
+                            Download PDF
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
                 <Box
                     sx={{
                         textAlign: 'center',
@@ -160,4 +220,4 @@ export default function Checkout() {
             </Box>
         </Grid2>
     );
-};
+}

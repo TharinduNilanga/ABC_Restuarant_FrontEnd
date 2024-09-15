@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { message } from "antd";
 
 export default function Users() {
     const navigate = useNavigate();
@@ -49,12 +50,14 @@ export default function Users() {
     const deleteUser = async (id) => {
         try {
             const response = await Axios.delete(`${process.env.REACT_APP_ENDPOINT}/api/user/${id}`);
-            if (response.status === 200) {
+            if (response) {
                 console.log('User deleted successfully');
+                message.success("User Deleted Successfully")
                 loadUsers();
             }
         } catch (error) {
             console.error('Error deleting user:', error);
+            message.success("User Deleted Failed")
         }
     };
 
@@ -64,6 +67,7 @@ export default function Users() {
             sx={{
                 minWidth: '800px',
                 bgcolor: 'white',
+                  height: '100vh'
             }}
         >
             <Menu />
@@ -77,19 +81,23 @@ export default function Users() {
             >
                 <Box
                     sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between', // Aligns content to the right
                         textAlign: 'center',
-                        margin: '20px auto 40px',
+                        margin: '20px auto 5px',
+
                     }}
                 >
+                    <Typography fontSize="20px" sx={{ color: 'black', fontWeight: 'bold' }}>User Form</Typography>
                     <Button
                         variant="contained"
                         onClick={() => navigate('/admin/addUsers')}
                         sx={{
-                            backgroundColor: '#FFFFFF',
-                            color: '#fe9901',
+                            backgroundColor: '#00796b',
+                            color: 'white',
                             ':hover': {
-                                bgcolor: ' #fe9901',
-                                color: 'white',
+                                bgcolor: 'white',
+                                color: '#00796b',
                             },
                         }}
                     >
@@ -206,11 +214,12 @@ export default function Users() {
                                                         onClick={() => navigate('/admin/editUsers', { state: { userId: user.userId } })}
                                                         aria-label="edit"
                                                         sx={{
-                                                            color: '#66ff99',
-                                                            backgroundColor: '#262626',
+                                                            color: '#00796b',
+                                                            backgroundColor: 'white',
                                                             marginRight: '3px',
                                                             ':hover': {
-                                                                color: '#009933',
+                                                                color: 'white',
+                                                                backgroundColor: '#00796b',
                                                             }
                                                         }}
                                                     >
@@ -221,10 +230,11 @@ export default function Users() {
                                                         onClick={() => deleteUser(user.userId)}
                                                         sx={{
                                                             color: '#ff6666',
-                                                            backgroundColor: '#262626',
+                                                            backgroundColor: 'white',
                                                             marginLeft: '3px',
                                                             ':hover': {
                                                                 color: '#ff0000',
+                                                                backgroundColor: '#00796b',
                                                             }
                                                         }}
                                                     >

@@ -11,10 +11,13 @@ import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Menu from "../Menu";
+import { message } from "antd";
+
 
 export default function AddUser() {
 
     let navigate = useNavigate();
+    const [isvalidPassword, setIsvalidPassword] = useState(false)
 
     useEffect(() => {
         const userId = sessionStorage.getItem('userId');
@@ -38,6 +41,18 @@ export default function AddUser() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+
+        if (name === "confirmPassword") {
+            let password = form.password;
+
+            if (password !== value) {
+
+                setIsvalidPassword(true)
+
+            } else {
+                setIsvalidPassword(false)
+            }
+        }
         setForm((prevForm) => ({
             ...prevForm,
             [name]: value,
@@ -49,9 +64,14 @@ export default function AddUser() {
         setLoading(true);
         try {
             const response = await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/user/addUser`, form);
-            navigate("/admin/users");
+            if (response) {
+                message.success("User Added Successfully")
+                navigate("/admin/users");
+            }
+
         } catch (error) {
             console.error(error);
+            message.error("User Added Failed")
             setError(error);
         } finally {
             setLoading(false);
@@ -113,6 +133,8 @@ export default function AddUser() {
         <Grid2
             sx={{
                 minWidth: '800px',
+                bgcolor: 'white',
+                height: '100vh'
             }}
         >
             <Menu />
@@ -129,12 +151,14 @@ export default function AddUser() {
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: 'white',
-                            color: '#00796b',
+                            bgcolor: '#00796b',
+                            color: 'white',
+
                             borderRadius: '10px',
                             ':hover': {
-                                bgcolor: '#00796b',
-                                color: 'white',
+                                backgroundColor: 'white',
+
+                                color: '#00796b',
                             },
                         }}
                         startIcon={<ArrowBackIosIcon />}
@@ -165,7 +189,7 @@ export default function AddUser() {
                             maxWidth="xs"
                             sx={{
                                 border: '2px solid black', // Sets a 2px solid black border
-                                
+
                             }}
                         >
                             <Typography
@@ -186,7 +210,7 @@ export default function AddUser() {
                                 noValidate
                                 sx={{
                                     mt: 1,
-                                    mb:2
+                                    mb: 2
                                 }}
                             >
                                 <FormControl fullWidth margin="normal" required sx={textboxStyle}>
@@ -279,7 +303,13 @@ export default function AddUser() {
                                     sx={textboxStyle}
                                     value={form.confirmPassword}
                                     onChange={handleChange}
+                                // error={isvalidPassword ? '' : "not matched"}
                                 />
+                                {isvalidPassword ? (
+                                    <Typography
+                                        color='red'
+                                    > Password Not Matched</Typography>
+                                ) : " "}
                                 <Button
                                     type="submit"
                                     fullWidth

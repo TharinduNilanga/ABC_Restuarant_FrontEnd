@@ -111,7 +111,7 @@ export default function AllReservations() {
         if (!reservationDate) return 'N/A';
         return reservationDate.split('T')[0];
     };
-    
+
     const time = (reservationTime) => {
         if (!reservationTime) return 'N/A';
         const timePart = reservationTime.split('T')[1];
@@ -119,19 +119,20 @@ export default function AllReservations() {
     };
 
     const buttonStyle = {
-        backgroundColor: '#cb7a01',
+        backgroundColor: '#00796b',
         color: '#ffffff',
         borderRadius: '5px',
-        border: '2px solid #fe9e0d',
+        border: '2px solid #00796b',
         alignContent: 'center',
         ':hover': {
-            bgcolor: ' #fe9e0d',
+            bgcolor: 'white',
+            color:'#00796b'
         },
     };
 
     return (
-        <Box>
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <Box sx={{ bgcolor: 'white', overflow: 'hidden' }}>
+            <Paper sx={{ bgcolor: 'white', width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 600 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>
@@ -170,13 +171,13 @@ export default function AllReservations() {
                                         {restaurants[reservation.reservationLocation]?.locationName || "Loading..."}
                                     </TableCell>
                                     <TableCell align="center">
-                                        {reservation.reservationStatus? 'Finished' : 'Not Finished'}
+                                        {reservation.reservationStatus ? 'Finished' : 'Not Finished'}
                                     </TableCell>
                                     <TableCell align="center">
                                         <Button
                                             variant="contained"
                                             sx={buttonStyle}
-                                            onClick={() => navigate('/staff/reservation/details', {state : {reservationId: reservation.reservationId}})}
+                                            onClick={() => navigate('/staff/reservation/details', { state: { reservationId: reservation.reservationId } })}
                                         >
                                             View
                                         </Button>

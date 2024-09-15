@@ -10,11 +10,14 @@ export default function CardComponent(props) {
 
     const loadProductDetails = async () => {
         try {
+            console.log('================rr====================');
+            console.log(props.cartItem.productId);
+            console.log('====================================');
             const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/product/${props.cartItem.productId}`);
             setProductDetails(result.data);
         } catch (err) {
             console.error("Error loading product details:", err);
-            setError("Failed to load product details.");
+            // setError("Failed to load product details.");
         }
     };
 
@@ -34,7 +37,7 @@ export default function CardComponent(props) {
                 try {
                     await loadProductDetails();
                 } catch (err) {
-                    setError("Failed to load product details.");
+
                 } finally {
                     setLoading(false);
                 }
@@ -51,7 +54,7 @@ export default function CardComponent(props) {
         width: '60%',
         minWidth: '622px',
         borderRadius: '10px',
-        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+        boxShadow: '4px 4px 4px 4px rgba(0, 0, 0, 0.3)',
         paddingBottom: '0px',
     };
 
@@ -78,7 +81,7 @@ export default function CardComponent(props) {
                         <tr>
                             <td width={'10%'}>
                                 <img
-                                    src={productDetails.productImage ? `/${productDetails.productImage}` : "/assets/empty.jpeg"}
+                                    src={productDetails.productImage ? ` data:image/jpeg;base64,${productDetails.productImage}` : "/assets/empty.jpeg"}
                                     alt={productDetails.productName || "Product"}
                                     style={imgStyle}
                                 />
@@ -113,6 +116,7 @@ export default function CardComponent(props) {
                                 <IconButton aria-label="delete" size="large" onClick={handleDelete}>
                                     <DeleteIcon
                                         sx={{
+                                            
                                             color: '#fa5555',
                                             ':hover': {
                                                 color: 'red',

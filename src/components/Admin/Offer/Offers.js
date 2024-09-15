@@ -6,6 +6,7 @@ import { Box, Typography, CircularProgress, Button, Table, TableBody, TableCell,
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { message } from "antd";
 
 export default function Offer() {
     const navigate = useNavigate();
@@ -58,10 +59,12 @@ export default function Offer() {
             const response = await Axios.delete(`${process.env.REACT_APP_ENDPOINT}/api/offer/${id}`);
             if (response.status === 200) {
                 console.log('Offer deleted successfully');
+                message.success("Offer Deleted Successfully")
                 loadOffers();
             }
         } catch (error) {
             console.error('Error deleting offer:', error);
+            message.success("Offer Deleted Failed")
         }
     };
 
@@ -71,11 +74,11 @@ export default function Offer() {
 
     return (
         <Grid2
-            container
-            justifyContent="center"
+           
             sx={{
                 minWidth: '800px',
                 bgcolor: 'white',
+                 height: '100vh'
             }}
         >
             <Menu />
@@ -84,7 +87,7 @@ export default function Offer() {
                 sx={{
                     padding: '30px 40px',
                     marginLeft: '240px',
-                    height: '642px'
+                  
                 }}
             >
                 {loading ? (
@@ -108,10 +111,14 @@ export default function Offer() {
                     <Box>
                         <Box
                             sx={{
+                                display: 'flex',
+                                justifyContent: 'space-between', // Aligns content to the right
                                 textAlign: 'center',
-                                marginBottom: '30px',
+                                margin: '20px auto 5px',
+
                             }}
                         >
+                            <Typography fontSize="20px" sx={{ color: 'black', fontWeight: 'bold' }}>Offer Form</Typography>
                             <Button
                                 variant="contained"
                                 onClick={() => navigate('/admin/addOffer')}
@@ -120,9 +127,10 @@ export default function Offer() {
                                     color: '#fff',
                                     padding: '10px 20px',
                                     fontWeight: 'bold',
-                                    borderRadius: '30px',
+
                                     ':hover': {
-                                        bgcolor: '#005f56',
+                                        bgcolor: 'white',
+                                        color: '#00796b',
                                     },
                                 }}
                             >
@@ -157,19 +165,13 @@ export default function Offer() {
                                                     <TableCell align="center">{offer.offerName}</TableCell>
                                                     <TableCell align="center">{offer.offerDescription}</TableCell>
                                                     <TableCell align="center">
-                                                        <Button
-                                                            variant="contained"
-                                                            size="small"
-                                                            sx={{
-                                                                backgroundColor: '#00796b',
-                                                                color: '#fff',
-                                                                ':hover': {
-                                                                    bgcolor: '#005f56',
-                                                                }
-                                                            }}
-                                                        >
-                                                            View
-                                                        </Button>
+                                                        {offer.offerImage && (
+                                                            <img
+                                                                src={`data:image/jpeg;base64,${offer.offerImage}`}
+                                                                alt="Category"
+                                                                style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                                            />
+                                                        )}
                                                     </TableCell>
                                                     <TableCell align="center">{offer.offerPrice}</TableCell>
                                                     <TableCell align="center">{offer.offerDiscount}</TableCell>
@@ -183,8 +185,11 @@ export default function Offer() {
                                                             aria-label="edit"
                                                             sx={{
                                                                 color: '#00796b',
+                                                                backgroundColor: 'white',
+                                                                marginRight: '3px',
                                                                 ':hover': {
-                                                                    color: '#005f56',
+                                                                    color: 'white',
+                                                                    backgroundColor: '#00796b',
                                                                 }
                                                             }}
                                                         >
@@ -194,9 +199,12 @@ export default function Offer() {
                                                             aria-label="delete"
                                                             onClick={() => deleteOffer(offer.id)}
                                                             sx={{
-                                                                color: '#f44336',
+                                                                color: '#ff6666',
+                                                                backgroundColor: 'white',
+                                                                marginLeft: '3px',
                                                                 ':hover': {
-                                                                    color: '#d32f2f',
+                                                                    color: '#ff0000',
+                                                                    backgroundColor: '#00796b',
                                                                 }
                                                             }}
                                                         >

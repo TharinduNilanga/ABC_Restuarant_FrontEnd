@@ -1,28 +1,37 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Paper from '@mui/material/Paper';
+import Drawer from '@mui/material/Drawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 import SendIcon from '@mui/icons-material/Send';
-import { useNavigate } from 'react-router-dom';
 import ListAltIcon from '@mui/icons-material/ListAlt';
-
-export default function FixedBottomNavigation() {
-    const [value, setValue] = React.useState('1');
+import { useNavigate } from 'react-router-dom';
+import { Toolbar } from '@mui/material';
+export default function DrawerNavigation() {
+    const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-        switch (newValue) {
-            case '1':
+    const toggleDrawer = (open) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+        setOpen(open);
+    };
+
+    const handleNavigate = (route) => {
+        switch (route) {
+            case 'menu':
                 navigate('/user/menu');
                 break;
-            case '2':
+            case 'offers':
                 navigate('/user/offers');
                 break;
-            case '3':
+            case 'chat':
                 navigate('/user/chat');
                 break;
             default:
@@ -31,38 +40,68 @@ export default function FixedBottomNavigation() {
         }
     };
 
+    const menuItems = [
+        { text: 'Menu', icon: <ListAltIcon />, route: 'menu' },
+        { text: 'Offers and Promotions', icon: <LocalOfferIcon />, route: 'offers' },
+        { text: 'Queries', icon: <SendIcon />, route: 'chat' }
+    ];
+
     return (
-        <Box sx={{ pb: 7, }}>
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, backgroundColor: '#00796b' }} elevation={3}>
-                <BottomNavigation
-                    value={value}
-                    onChange={handleChange}
-                    showLabels
-                    sx={{
+        <Box >
+            <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+                sx={{ bgcolor: 'white' }}
+            >
+                <MenuIcon sx={{ color: 'black' }} />
+
+            </IconButton>
+            <Drawer
+                anchor="left"
+                open={open}
+                onClose={toggleDrawer(false)}
+                sx={{
+
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+
+                        boxSizing: 'border-box',
                         bgcolor: '#00796b',
-                        padding: '10px 0px'
-                    }}
+                        padding: '20px',
+                    },
+                }}
+            >
+                <Toolbar />
+                <Box
+                    sx={{ width: 250 }}
+                    role="presentation"
+                    onClick={toggleDrawer(false)}
+                    onKeyDown={toggleDrawer(false)}
                 >
-                    <BottomNavigationAction
-                        label="Menu"
-                        value='1'
-                        icon={<ListAltIcon fontSize="large" sx={{ color: 'black', '&.Mui-selected': { color: '#fe9e0d' } }} />}
-                        sx={{ color: 'white' }}
-                    />
-                    <BottomNavigationAction
-                        label="Offers and Promotions"
-                        value='2'
-                        icon={<LocalOfferIcon fontSize="large" />}
-                        sx={{ color: 'white' }}
-                    />
-                    <BottomNavigationAction
-                        label="Queries"
-                        value='3'
-                        icon={<SendIcon fontSize="large" />}
-                        sx={{ color: 'white' }}
-                    />
-                </BottomNavigation>
-            </Paper>
+                    <List>
+                        {menuItems.map((item, index) => (
+                            <ListItem button key={item.text} onClick={() => handleNavigate(item.route)} sx={{
+                                borderRadius: '8px',
+                                color: 'white',
+                                ':hover': {
+                                    bgcolor: '#e0f2f1',
+                                    color: '#00796b',
+                                },
+                            }}>
+                                <ListItemIcon sx={{
+                                    color: 'white',
+                                    ':hover': {
+                                        color: '#00796b',
+                                    },
+                                }}>{item.icon}</ListItemIcon>
+                                <ListItemText primary={item.text} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+            </Drawer>
         </Box>
     );
 }

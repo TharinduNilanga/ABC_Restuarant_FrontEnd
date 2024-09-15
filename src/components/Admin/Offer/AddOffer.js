@@ -22,6 +22,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function AddOffer() {
     const navigate = useNavigate();
@@ -42,6 +43,8 @@ export default function AddOffer() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [imageBase64, setImageBase64] = useState(''); // For storing the image as base64
+    const [imagePreview, setImagePreview] = useState('');
 
     useEffect(() => {
         const userId = sessionStorage.getItem('userId');
@@ -57,6 +60,9 @@ export default function AddOffer() {
         setLoading(true);
         try {
             const result = await Axios.get(`${process.env.REACT_APP_ENDPOINT}/api/productCategory/allProductCategories`);
+            console.log('====================================');
+            console.log(result.data);
+            console.log('====================================');
             setCategories(result.data);
         } catch (error) {
             console.error("Error loading user data:", error);
@@ -94,9 +100,11 @@ export default function AddOffer() {
         setLoading(true);
         try {
             const response = await Axios.post(`${process.env.REACT_APP_ENDPOINT}/api/offer/addOffer`, form);
+            message.success("Offer Added Successfully")
             navigate("/admin/offers");
         } catch (error) {
             console.error(error);
+            message.success("Offer Added Failed")
             setError(error);
         } finally {
             setLoading(false);
@@ -116,9 +124,9 @@ export default function AddOffer() {
     });
 
     const selectStyle = {
-        color: '#00796b',
+        color: 'black',
         '& .Mui-selected': {
-            color: '#00796b',
+            color: 'black',
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -131,15 +139,17 @@ export default function AddOffer() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#00796b",
+            color: "black",
             fontWeight: "bold",
-            borderColor: "#00796b",
+
         },
     };
 
     const textboxStyle = {
+        mt: 2,
         input: {
-            color: '#00796b',
+            color: 'black',
+
         },
         "& .MuiOutlinedInput-notchedOutline": {
             borderWidth: "2px",
@@ -152,14 +162,14 @@ export default function AddOffer() {
             },
         },
         "& .MuiInputLabel-outlined": {
-            color: "#00796b",
+            color: "black",
             fontWeight: "bold",
-            borderColor: "#00796b",
+
         },
     };
 
     const buttonStyle = {
-        mt: '30px',
+        mt: '80px',
         mb: 2,
         color: 'white',
         background: '#00796b',
@@ -189,9 +199,9 @@ export default function AddOffer() {
     const datePicker = {
         width: '100%',
         mt: '1.5',
-        mb: 1,
+        mb: 3,
         '& .MuiInputBase-input': {
-            color: '#00796b',
+            color: 'black',
         },
         '& .MuiOutlinedInput-notchedOutline': {
             borderWidth: "2px",
@@ -206,14 +216,35 @@ export default function AddOffer() {
             borderWidth: "3px",
         },
         '& .MuiSvgIcon-root': {
-            color: '#00796b',
+            color: 'black',
         },
+    };
+    const handleImageChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                const base64String = reader.result.split(',')[1]; // Extract the base64 part
+                setImageBase64(base64String);
+                setImagePreview(reader.result); // Use the whole result for preview
+                console.log('====================================');
+                console.log(reader.result);
+                console.log('====================================');
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    "offerImage": base64String,
+                }));
+            };
+            reader.readAsDataURL(file); // Convert file to base64
+        }
     };
 
     return (
         <Grid2
             sx={{
                 minWidth: '800px',
+                 height: '100%'
             }}
         >
             <Menu />
@@ -247,13 +278,14 @@ export default function AddOffer() {
                         <Button
                             variant="contained"
                             sx={{
-                                backgroundColor: 'white',
-                                color: '#00796b',
+
+                                bgcolor: '#00796b',
+                                color: '#white',
                                 borderRadius: '10px',
                                 borderColor: '#00796b',
                                 borderWidth: '2px',
                                 ':hover': {
-                                    bgcolor: '#e0f2f1',
+                                    backgroundColor: 'white',
                                     color: '#00796b',
                                 },
                             }}
@@ -265,6 +297,10 @@ export default function AddOffer() {
                         <Container
                             component="main"
                             maxWidth="xs"
+                            sx={{
+                                border: '2px solid black', // Sets a 2px solid black border
+                                bgcolor: '#daffe7',
+                            }}
                         >
                             <Typography
                                 component="h1"
@@ -275,7 +311,7 @@ export default function AddOffer() {
                                     mb: '10px',
                                     fontWeight: 'bold',
                                     textDecoration: 'underline',
-                                    color: '#00796b',
+                                    color: 'black',
                                 }}
                             >
                                 Add Offer
@@ -333,19 +369,24 @@ export default function AddOffer() {
                                     sx={fileUploadBtn}
                                     startIcon={<CloudUploadIcon />}
                                 >
+
                                     Upload Image
-                                    <VisuallyHiddenInput
-                                        type="file"
-                                        name="offerImage"
-                                        onChange={(event) => {
-                                            const file = event.target.files[0];
-                                            setForm((prevForm) => ({
-                                                ...prevForm,
-                                                offerImage: file,
-                                            }));
-                                        }}
-                                    />
+                                    <input type="file" accept="image/jpg, image/jpeg, image/png" hidden onChange={handleImageChange} />
+
                                 </Button>
+                                {imagePreview && (
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center', // Aligns content to the right
+
+                                            margin: '20px auto 5px',
+
+                                        }}
+                                    >
+                                        <img src={imagePreview} alt="Preview" style={{ width: '200px', marginBottom: '20px' }} />
+                                    </Box>
+                                )}
                                 <TextField
                                     margin="normal"
                                     required
@@ -447,9 +488,8 @@ export default function AddOffer() {
                                 </LocalizationProvider>
                                 <FormControl
                                     fullWidth
-                                    sx={{
-                                        mt: 2,
-                                    }}
+
+                                    sx={textboxStyle}
                                 >
                                     <InputLabel
                                         id="category-label"
@@ -464,16 +504,20 @@ export default function AddOffer() {
                                         id="offerCategory"
                                         name="offerCategory"
                                         multiple
+                                        sx={selectStyle}
                                         value={form.offerCategory}
                                         onChange={handleCategoryChange}
-                                        sx={selectStyle}
+                                        renderValue={(selected) => selected.map(categoryId => {
+                                            const category = categories.find(f => f.categoryId === categoryId);
+                                            return category ? category.categoryName : '';
+                                        }).join(', ')}
                                     >
                                         {categories.map((category) => (
                                             <MenuItem
-                                                key={category.id}
-                                                value={category.id}
+                                                key={category.categoryId}
+                                                value={category.categoryId}
                                             >
-                                                {category.name}
+                                                {category.categoryName}
                                             </MenuItem>
                                         ))}
                                     </Select>

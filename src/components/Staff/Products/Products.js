@@ -62,6 +62,7 @@ export default function Products() {
 
     const box2Style = {
         mb: '30px',
+        
     };
 
     const box3Style = {
@@ -72,7 +73,7 @@ export default function Products() {
     };
 
     return (
-        <Box>
+        <Box sx={{bgcolor:'white',overflow:'hidden'}}>
             <Menu />
             <Box component="main" sx={box1Style}>
                 {loading ? (
@@ -116,12 +117,12 @@ export default function Products() {
 
                         return (
                             <Box key={category.categoryId} sx={box2Style}>
-                                <Typography variant="h5" sx={{ mb: 1, fontWeight: 'bold' }}>
+                                {/* <Typography variant="h5" sx={{ mb: 1, fontWeight: 'bold' }}>
                                     {category.categoryName}
-                                </Typography>
+                                </Typography> */}
                                 <Box sx={box3Style}>
                                     {categoryProducts.map((product) => (
-                                        <Card key={product.id} product={product} />
+                                        <Card key={product.id} product={product}  name={category}/>
                                     ))}
                                 </Box>
                             </Box>

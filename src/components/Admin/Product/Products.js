@@ -7,6 +7,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTheme } from '@mui/material/styles';
+import { message } from "antd";
 
 export default function Products() {
     const theme = useTheme();
@@ -65,10 +66,12 @@ export default function Products() {
         try {
             const response = await Axios.delete(`${process.env.REACT_APP_ENDPOINT}/api/product/${id}`);
             if (response.status === 200) {
+                message.success("Product Deleted Successfully")
                 console.log('Product deleted successfully');
                 loadProducts();
             }
         } catch (error) {
+            message.success("Product Deleted Failed")
             console.error('Error deleting product:', error);
         }
     };
@@ -77,25 +80,29 @@ export default function Products() {
         <Grid2
             sx={{
                 minWidth: '800px',
-                bgcolor: theme.palette.background.paper
+                bgcolor: theme.palette.background.paper,
+                 height: '100vh'
             }}
         >
             <Menu />
             <Box
                 component="main"
                 sx={{
-                    padding: '20px 30px',
-                    marginLeft: '200px',
-                    height: 'calc(100vh - 64px)', // Adjust height to fit below header
-                    bgcolor: theme.palette.background.default
+                    padding: '30px 40px',
+                    marginLeft: '240px',
+                    height: '642px'
                 }}
             >
                 <Box
                     sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between', // Aligns content to the right
                         textAlign: 'center',
-                        margin: '20px 0 30px',
+                        margin: '20px auto 5px',
+
                     }}
                 >
+                    <Typography fontSize="20px" sx={{ color: 'black', fontWeight: 'bold' }}>Product Form</Typography>
                     <Button
                         variant="contained"
                         onClick={() => navigate('/admin/addProduct')}
@@ -190,9 +197,11 @@ export default function Products() {
                                                             aria-label="edit"
                                                             sx={{
                                                                 color: '#00796b',
+                                                                backgroundColor: 'white',
                                                                 marginRight: '3px',
                                                                 ':hover': {
-                                                                    bgcolor: '#004d40',
+                                                                    color: 'white',
+                                                                    backgroundColor: '#00796b',
                                                                 }
                                                             }}
                                                         >
@@ -202,10 +211,12 @@ export default function Products() {
                                                             aria-label="delete"
                                                             onClick={() => deleteProduct(product.productId)}
                                                             sx={{
-                                                                color: '#d32f2f',
+                                                                color: '#ff6666',
+                                                                backgroundColor: 'white',
                                                                 marginLeft: '3px',
                                                                 ':hover': {
-                                                                    bgcolor: '#c62828',
+                                                                    color: '#ff0000',
+                                                                    backgroundColor: '#00796b',
                                                                 }
                                                             }}
                                                         >

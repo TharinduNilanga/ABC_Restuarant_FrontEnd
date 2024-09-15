@@ -41,7 +41,7 @@ export default function Facilities() {
     };
 
     return (
-        <Box>
+        <Box sx={{ bgcolor: 'white', overflow: 'hidden' }}>
             <Menu />
             <Box
                 component="main"
@@ -83,7 +83,7 @@ export default function Facilities() {
                     </Typography>
                 ) : facilities.length > 0 ? (
                     <Box sx={{ mb: '30px' }}>
-                        <Typography variant="h5" sx={{ mb: 1, fontWeight: 'bold' }}>Facilities</Typography>
+
                         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                             {facilities.map((facility) => (
                                 <Card key={facility.id} facility={facility} />
